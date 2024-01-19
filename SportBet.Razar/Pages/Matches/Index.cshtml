@@ -1,0 +1,60 @@
+﻿@page
+@model SportBet.Razar.Pages.Matches.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Match[0].HomeScore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Match[0].AwayScore)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Match[0].MatchDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Match[0].AwayTeam)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Match[0].HomeTeam)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Match) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomeScore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AwayScore)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MatchDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AwayTeam.TeamName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.HomeTeam.TeamName)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.MatchId">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.MatchId">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.MatchId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

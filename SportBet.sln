@@ -1,0 +1,74 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBet.Api", "SportBet.Api\SportBet.Api.csproj", "{7CB61558-31A7-48E1-BAF5-0656F5561213}"
+	ProjectSection(ProjectDependencies) = postProject
+		{0BA88E40-ACB4-4942-82C9-2DC1D2BB77C8} = {0BA88E40-ACB4-4942-82C9-2DC1D2BB77C8}
+		{37756749-29B7-45A9-877B-C6385C72A8F8} = {37756749-29B7-45A9-877B-C6385C72A8F8}
+		{6BD81653-7247-4FFE-AB6D-68323DBED1DE} = {6BD81653-7247-4FFE-AB6D-68323DBED1DE}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBet.Domain", "SportBet.Domain\SportBet.Domain.csproj", "{37756749-29B7-45A9-877B-C6385C72A8F8}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBet.Infrastructure", "SportBet.Infrastructure\SportBet.Infrastructure.csproj", "{01DBE44B-7BB5-410B-925F-281E8F7F942A}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6BD81653-7247-4FFE-AB6D-68323DBED1DE} = {6BD81653-7247-4FFE-AB6D-68323DBED1DE}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBet.Application", "SportBet.Application\SportBet.Application.csproj", "{0BA88E40-ACB4-4942-82C9-2DC1D2BB77C8}"
+	ProjectSection(ProjectDependencies) = postProject
+		{01DBE44B-7BB5-410B-925F-281E8F7F942A} = {01DBE44B-7BB5-410B-925F-281E8F7F942A}
+		{37756749-29B7-45A9-877B-C6385C72A8F8} = {37756749-29B7-45A9-877B-C6385C72A8F8}
+		{6BD81653-7247-4FFE-AB6D-68323DBED1DE} = {6BD81653-7247-4FFE-AB6D-68323DBED1DE}
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBet.Contracts", "SportBet.Contracts\SportBet.Contracts.csproj", "{6BD81653-7247-4FFE-AB6D-68323DBED1DE}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SportBet.Razar", "SportBet.Razar\SportBet.Razar.csproj", "{FB26D3B6-C9BB-4443-A4D3-BC93DB57BB12}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SportBet.Service", "SportBet.Service\SportBet.Service.csproj", "{6C62B87F-CF42-430A-A4C0-A29D4F44E234}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7CB61558-31A7-48E1-BAF5-0656F5561213}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7CB61558-31A7-48E1-BAF5-0656F5561213}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7CB61558-31A7-48E1-BAF5-0656F5561213}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7CB61558-31A7-48E1-BAF5-0656F5561213}.Release|Any CPU.Build.0 = Release|Any CPU
+		{37756749-29B7-45A9-877B-C6385C72A8F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{37756749-29B7-45A9-877B-C6385C72A8F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{37756749-29B7-45A9-877B-C6385C72A8F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{37756749-29B7-45A9-877B-C6385C72A8F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01DBE44B-7BB5-410B-925F-281E8F7F942A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01DBE44B-7BB5-410B-925F-281E8F7F942A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01DBE44B-7BB5-410B-925F-281E8F7F942A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01DBE44B-7BB5-410B-925F-281E8F7F942A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA88E40-ACB4-4942-82C9-2DC1D2BB77C8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA88E40-ACB4-4942-82C9-2DC1D2BB77C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA88E40-ACB4-4942-82C9-2DC1D2BB77C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA88E40-ACB4-4942-82C9-2DC1D2BB77C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6BD81653-7247-4FFE-AB6D-68323DBED1DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BD81653-7247-4FFE-AB6D-68323DBED1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BD81653-7247-4FFE-AB6D-68323DBED1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BD81653-7247-4FFE-AB6D-68323DBED1DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB26D3B6-C9BB-4443-A4D3-BC93DB57BB12}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB26D3B6-C9BB-4443-A4D3-BC93DB57BB12}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB26D3B6-C9BB-4443-A4D3-BC93DB57BB12}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB26D3B6-C9BB-4443-A4D3-BC93DB57BB12}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C62B87F-CF42-430A-A4C0-A29D4F44E234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C62B87F-CF42-430A-A4C0-A29D4F44E234}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C62B87F-CF42-430A-A4C0-A29D4F44E234}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C62B87F-CF42-430A-A4C0-A29D4F44E234}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4223D84C-7D8B-4044-A21D-17B8EB099256}
+	EndGlobalSection
+EndGlobal

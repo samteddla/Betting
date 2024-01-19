@@ -1,0 +1,1 @@
+export { default as MatchSelectionCompnent } from "./MatchSelectionCompnent.vue";

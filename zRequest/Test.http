@@ -1,0 +1,24 @@
+@url = https://prstest.no
+@token = eyJhbGciOiJSUzI1NiIsImtpZCI6IjVGNjIwM0E4M0MxRTMwOUY5NUE1NThFMjI2NzRCNTQyRENDN0ExQTIiLCJ0eXAiOiJKV1QiLCJ4NXQiOiJYMklEcUR3ZU1KLVZwVmppSm5TMVF0ekhvYUkifQ.eyJuYmYiOjE3MDMxNTQzNjQsImV4cCI6MTcwMzE4MzE2NCwiaXNzIjoiaHR0cHM6Ly9wcnN0ZXN0Lm5vL2lkZW50aXR5c2VydmVyLTIuMiIsImF1ZCI6WyJodHRwczovL3Byc3Rlc3Qubm8vaWRlbnRpdHlzZXJ2ZXItMi4yL3Jlc291cmNlcyIsImxjUnNXZWJBcGkiLCJsY01hcFdlYkFwaSIsImxjUnNHYXRld2F5Il0sImNsaWVudF9pZCI6IkxDTUFQLTIuOCIsInN1YiI6ImM2YzU1MDc0LWUzNmEtNDc3Mi1hYWVjLTdkNWQ0Y2Q5YjcyYyIsImF1dGhfdGltZSI6MTcwMzE1NDM2MywiaWRwIjoibG9jYWwiLCJVc2VyTmFtZSI6IkdBUk1BUiIsIlBlcnNvbklkIjoiNzc4NTUiLCJDb21wYW55SWQiOiIwNCIsIkVudmlyb25tZW50SXNWaWV3IjoiVHJ1ZSIsIkVudmlyb25tZW50SWQiOiJSU19ITVJfTmV4dCIsInpvbmVpbmZvIjoiRXVyb3BlL09zbG8iLCJzY29wZSI6WyJvcGVuaWQiLCJwcm9maWxlIiwicnMucHJvZmlsZSIsImxjUnNXZWJBcGkudGltZXRyYWNraW5nIiwibGNNYXBXZWJBcGkuZnVsbF9hY2Nlc3MiLCJsY1JzR2F0ZXdheS5mdWxsX2FjY2VzcyJdLCJhbXIiOlsicHdkIl19.o8drw61eW7UrsD1CuH2jATa6CU18mBCZ-ewBU0turfkgLq7aCHcBSqQ2yDfh1GxMD9lHEqG8qhNAcUD6Q2REwNM4rMDeqoQEvT2s7hGoL6OqbvxvtQHZQiMKfxy6vvR_KCd6AlIGGkmR0AJTx5rR_WHbdkFVtBQIPfqzNgFy55iEJ-ChDd9V1IgeLz6ugAz-afBaQf_PojB8n5kDue3VovfP1Du4W_M9B446jDXIeChG1HwTx-_eIa-iHo4T40AraYnirwIMgf8jdA-bsPg0iIEMekdIty8m7NOXVpp6dA4KV4UEQkLuR7QeR4ziWXzknC34ALpzNrNyFd4yijpnBA
+
+@from = 2023-07-24T23:00:00.000Z
+@getAbsences = true
+@getOffdays = true
+@getShifts = true
+@showF1InCalendar = true
+@showF2InCalendar = true
+@showShiftParts = true
+@to = 2023-11-25T23:00:00.000Z
+### get calander 
+GET {{url}}/lcmap-2.8/server/api/calendarevents/transferobject?from=2023-10-24T23:00:00.000Z&getAbsences=true&getOffdays=true&getShifts=true&showF1InCalendar=true&showF2InCalendar=true&showShiftParts=true&to=2023-11-25T23:00:00.000Z
+Accept: application/json
+Authorization: Bearer {{token}}
+###
+
+GET {{url}}/lcmap-2.8/server/api/calendarevents/transferobject?from={{from}}&getAbsences={{getAbsences}}&getOffdays={{getOffdays}}&getShifts={{getShifts}}&showF1InCalendar={{showF1InCalendar}}&showF2InCalendar={{showF2InCalendar}}&showShiftParts={{showShiftParts}}&to={{to}}
+Accept: application/json
+Authorization: Bearer {{token}}
+
+
+
+
