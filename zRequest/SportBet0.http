@@ -1,11 +1,6 @@
 @HostAddress = http://localhost:5002
 @home = http://localhost:5002/swagger/
-@Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiSm9obkRvZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImJldDFAU3BvcnRiZXQuY29tIiwidS1pZCI6IjEiLCJ1LXBob25lIjoiMTIzNDU2Nzg5IiwidS1uYW1lIjoiSm9obkRvZSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIlVzZXIiXSwiZXhwIjoxNzAyNTQ2MzQxLCJpc3MiOiJodHRwczovL2xvY2FsaG9zdDo1MDAxIiwiYXVkIjoiU2FtcGxlQXVkaWVuY2UifQ.vjvCcTQD2TSbLW9mLvof4tNn1X7m9rccxahO-FzaU4c
-@Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjIiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoic2FtdGVkbGEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJiZXQyQFNwb3J0YmV0LmNvbSIsInUtaWQiOiIyIiwidS1waG9uZSI6Ijk1NTMzODM4MyIsInUtbmFtZSI6InNhbXRlZGxhIiwiaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93cy8yMDA4LzA2L2lkZW50aXR5L2NsYWltcy9yb2xlIjpbIkFkbWluIiwiVXNlciIsImNhbldyaXRlIl0sIm15LXNjb3BlIjoiY2FuV3JpdGUiLCJleHAiOjE3MDI1NjQzMDEsImlzcyI6Imh0dHBzOi8vbG9jYWxob3N0OjUwMDEiLCJhdWQiOiJTYW1wbGVBdWRpZW5jZSJ9.gRkAnAB7MozqzRsCKFrqRBEBUAmsTong4ArG4YN51lg
-### weatherforecast   
-GET {{HostAddress}}/weatherforecast/
-Accept: application/json
-Authorization: Bearer {{Token}}
+@Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiSm9obkRvZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImJldDFAU3BvcnRiZXQuY29tIiwidS1pZCI6IjEiLCJ1LXBob25lIjoiMTIzNDU2Nzg5IiwidS1uYW1lIjoiSm9obkRvZSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIlVzZXIiXSwibXktc2NvcGUiOiJjYW5Xcml0ZSIsImV4cCI6MTcxMTQ2NzgyNywiaXNzIjoiaHR0cHM6Ly9zcG9ydGJldC5jb20iLCJhdWQiOiJzcG9ydGJldCBBdWRpZW5jZSJ9.PJIWzXaIlj11dEDddj_eRlBqjkD3NAlwO0OdzM6ZEs8
 ### 
 GET {{HostAddress}}/team
 Accept: application/json
@@ -23,63 +18,57 @@ Authorization: Bearer {{Token}}
 
 #login
 ### 
-POST {{HostAddress}}/login
+POST {{HostAddress}}/Auth
 Content-Type: application/json
 
-#{
-#  "username": "JohnDoe",
-#  "password": "123456"
-#}
 {
-  "username": "samtedla",
-  "password": "thecars"
-}
-### match
-GET {{HostAddress}}/match
-Accept: application/json
-Authorization: Bearer {{Token}}
-
-###
-POST {{HostAddress}}/match
-Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{Token}}
-
-{
-  "homeTeamId": 7,
-  "awayTeamId": 9,
-  "matchDate": "2021-05-02T00:00:00"
-}
-
-### odd  
-GET {{HostAddress}}/odd
-Accept: application/json
-Authorization: Bearer {{Token}}
-
-###  
-POST {{HostAddress}}/odd
-Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{Token}}
-
-{
-  "name": "More",
-  "oddsType": 2
-}
-### Fixture 
-POST {{HostAddress}}/fixture
-Content-Type: application/json
-Accept: application/json
-Authorization: Bearer {{Token}}
-
-{
-  "oddsId": 3,
-  "matchId": 2,
-  "date": "2023-12-12T18:49:02.323Z"
+  "username": "JohnDoe",
+  "password": "123456"
 }
 
 ### get-cards
 GET {{HostAddress}}/Bet/get-cards
 Accept: application/json
 Authorization: Bearer {{Token}}
+###
+POST {{HostAddress}}/Bet/create-match-selection HTTP/1.1
+Accept: application/json
+Authorization: Bearer {{Token}}
+Content-Type: application/json
 
+{
+  "name": "Sunday Game 1",
+  "description": "Sunday Week 2",
+  "activeUntil": "2024-01-24T21:58:04.970Z",
+  "matches": [
+    5,6,7,8,9
+  ],
+  "matchesTypes": [
+    1,2,3
+  ]
+}
+####
+{
+  "name": "Saturday Game 1",
+  "description": "Saturday Week 2",
+  "activeUntil": "2024-01-23T21:58:04.970Z",
+  "matches": [
+    1,2,3,4
+  ],
+  "matchesTypes": [
+    1,2,3
+  ]
+}
+###
+@matchtypeid = 1
+PUT {{HostAddress}}/Bet/update-bet-result/{{matchtypeid}} HTTP/1.1
+Accept: application/json
+Authorization: Bearer {{Token}}
+Content-Type: application/json
+
+{
+  "matchTypeId": 3,
+  "matchSelectionId": 1,
+  "matchId": 4,
+  "outcomeId": 1
+}

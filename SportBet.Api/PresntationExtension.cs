@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -18,8 +19,13 @@ public static class PresentationExtension
         services.AddDistributedMemoryCache();
         services.Configure<CacheSettings>(configuration.GetSection(CacheSettings.SectionName));
 
-        services.AddControllers();
-
+        services.AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.WriteIndented = true;
+                options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+            });
+            
         services.AddSingleton<ProblemDetailsFactory, ApiProblemDetailsFactory>();
         services.AddHttpContextAccessor();
 

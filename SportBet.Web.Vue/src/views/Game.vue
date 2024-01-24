@@ -1,18 +1,5 @@
 <template>
     <v-sheet elevation="12" rounded="lg" width="100%" class="pa-4 mx-auto">
-       
-        <v-overlay
-          v-model="dialog"
-          contained
-          class="align-center justify-center"
-        >
-            <v-progress-circular
-                indeterminate
-                size="64"
-                color="primary"
-            ></v-progress-circular>
-        </v-overlay>
-
         <v-fade-transition hide-on-leave>
             <v-card v-if="dialog2" append-icon="$close" class="mx-auto" elevation="16" max-width="500"
                 title="Send a receipt">
@@ -110,7 +97,7 @@
                 </v-row>
             </v-sheet>
             <div class="pa-2"></div>
-            <v-btn v-if="canBuy" :disabled="loading" :loading="loading" block class="text-none mb-4" color="indigo-darken-3"
+            <v-btn v-if="canBuy" block class="text-none mb-4" color="indigo-darken-3"
                 size="x-large" variant="flat" @click="submitMatch">Buy now</v-btn>
 
             <v-btn block class="text-none" color="grey-lighten-3" size="x-large" variant="flat" @click="clearSelection">
@@ -142,7 +129,7 @@
                         <div>Costs: {{ costs }}</div>
                     </v-col>
                     <v-col>
-                        <v-btn v-if="canBuy" :disabled="loading" :loading="loading" block class="text-none mb-4" color="indigo-darken-3"
+                        <v-btn v-if="canBuy" block class="text-none mb-4" color="indigo-darken-3"
                  variant="flat" @click="submitMatch">Buy</v-btn>
 
                     </v-col>
@@ -162,9 +149,7 @@ import { is } from '@babel/types';
 const costs = ref(0);
 const canBuy = ref(false);
 const halfandFullTime = ref(1);
-const dialog = ref(false);
 const dialog2 = ref(false);
-const loading = ref(false);
 const store = MatchStore();
 const auth = AuthStore();
 const outcomes = ref([{ "outcomeId": 1, "name": "H" }, { "outcomeId": 4, "name": "A" }, { "outcomeId": 2, "name": "D" }]);
@@ -184,13 +169,6 @@ watch(() => route.params.id,
         routeId.value = id.toString();
     }
 )
-
-watch(loading, (val: boolean) => {
-    console.log('loading : ', val);
-    if (!val) return;
-    setTimeout(() => (loading.value = false ), 2000);
-    dialog.value = true;
-});
 
 // watch the selectedChoices AND selectionId at the same time
 watch([selectedChoices, selectionId], (val: any) => {
@@ -265,20 +243,16 @@ const submitMatch = async () => {
     };
 
     console.log(responses);
-    loading.value = !loading.value;
-    /*
+    
     var resp = await store.betOn(responses);
     console.log(resp);
     if (resp) {
         if (resp.isSaved) {
-            dialog.value = true;
-            loading.value = !loading.value;
         }
-    }*/
+    }
 }
 
 const showCards = () => {
-    dialog.value = false;
     router.push({ name: 'mycards' });
 }
 

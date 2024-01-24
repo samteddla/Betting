@@ -23,4 +23,36 @@
     <ProjectReference Include="..\SportBet.Contracts\SportBet.Contracts.csproj" />
   </ItemGroup>
 
+ <ItemGroup>
+		<PackageReference Include="NSwag.MSBuild" Version="13.18.2">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
+	</ItemGroup>
+
+
+	<ItemGroup>
+		<None Update="nswag.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
+<PropertyGroup>
+  <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
+</PropertyGroup>
+
+	<Target Name="NSwag" AfterTargets="Build">
+		<Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net70) run nswag.json /variables:Configuration=$(Configuration) --verbouse">
+			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
+			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
+		</Exec>
+		<Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="Low" />
+		<Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
+	</Target>
+	
+	<Target Name="RunJavaJar" AfterTargets="NSwag">
+      <Exec Command="Y:\Bin\jdk-21.0.2\bin\java.exe -jar Y:\bin\swagger-codegen-cli-3.0.52.jar generate -i .\auto-generated\SportBet-api.yaml -l typescript-axios -o .\auto-generated\src\api -t Y:\Src\mustache --flatten-inline-schema true" />
+  </Target>
 </Project>
