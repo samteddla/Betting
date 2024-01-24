@@ -53,6 +53,6 @@
 	</Target>
 	
 	<Target Name="RunJavaJar" AfterTargets="NSwag">
-      <Exec Command="Y:\Bin\jdk-21.0.2\bin\java.exe -jar Y:\bin\swagger-codegen-cli-3.0.52.jar generate -i .\auto-generated\SportBet-api.yaml -l typescript-axios -o .\auto-generated\src\api -t Y:\Src\mustache --flatten-inline-schema true" />
+      <Exec Command="Y:\Bin\jdk-21.0.2\bin\java.exe -jar Y:\bin\swagger-codegen-cli-3.0.52.jar generate -i .\auto-generated\SportBet-api.yaml -l typescript-axios -o .\auto-generated\src\api --flatten-inline-schema true" />
   </Target>
 </Project>

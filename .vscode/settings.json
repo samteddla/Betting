@@ -1,0 +1,88 @@
+{
+	"update.mode": "manual",
+	"editor.inlineSuggest.enabled": true,
+	"git.confirmSync": false,
+	"editor.fontFamily": "'Cascadia Code Light', 'Courier New', monospace",
+	"workbench.colorTheme": "Nord",
+	"files.autoSave": "onFocusChange",
+	"explorer.confirmDelete": false,
+	"github.copilot.enable": {
+		"*": true,
+		"plaintext": false,
+		"markdown": true,
+		"scminput": false
+	},
+	"[csharp]": {
+		"editor.defaultFormatter": "ms-dotnettools.csharp"
+	},
+	"workbench.editorAssociations": {
+		"*.xd": "default"
+	},
+	"mssql.objectExplorer.groupBySchema": false,
+	"files.exclude": {
+		"**/.github": true,
+		"**/.idea": true,
+		"**/.vs": true,
+		"**/bin": true,
+		"**/obj": true
+	},
+	"explorer.confirmDragAndDrop": false,
+	"git.autofetch": true,
+	"editor.fontLigatures": false,
+	"terminal.integrated.fontFamily": "'MesloLGM Nerd Font Mono'",
+	"terminal.integrated.fontSize": 15,
+	"terminal.integrated.fontWeightBold": "normal",
+	"workbench.colorCustomizations": {
+		"[Nord]": {
+			"activityBar.background": "#3b4252",
+			"activityBarBadge.background": "#81a1c1",
+			"activityBarBadge.foreground": "#f2f2f4"
+		}
+	},
+	"terminal.integrated.profiles.linux": {
+		"bash": {
+			"path": "bash",
+			"icon": "terminal-bash"
+		},
+		"zsh": {
+			"path": "zsh"
+		},
+		"fish": {
+			"path": "fish"
+		},
+		"tmux": {
+			"path": "tmux",
+			"icon": "terminal-tmux"
+		},
+		"pwsh": {
+			"path": "pwsh",
+			"icon": "terminal-powershell",
+		}
+	},
+	"diffEditor.ignoreTrimWhitespace": false,
+	"git.openRepositoryInParentFolders": "never",
+	"editor.minimap.enabled": false,
+	"typescript.updateImportsOnFileMove.enabled": "always",
+	"mssql.connections": [
+		{
+			"connectionString": "Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True;; Encrypt=true; Trust Server Certificate=true;",
+			"profileName": "Express",
+			"encrypt": "Mandatory",
+			"trustServerCertificate": true,
+			"server": "localhost\\SQLEXPRESS",
+			"database": "master",
+			"user": "",
+			"password": "",
+			"connectTimeout": 15,
+			"commandTimeout": 30,
+			"applicationName": "vscode-mssql",
+			"authenticationType": "Integrated"
+		}
+	],
+	"editor.fontSize": 18,
+	"workbench.preferredDarkColorTheme": "GitHub Light",
+	"terminal.integrated.tabs.defaultColor": "terminal.ansiGreen",
+	"editor.codeActionsOnSave": {
+		"source.fixAll": "explicit"
+	}
+}

@@ -398,6 +398,3 @@ FodyWeavers.xsd
 *.sln.iml
 SportBet.Infrastructure/Migrations/
 zRequest/SportBet.http
-.vscode/settings.json
-SportBet.Api/nswag.json
-SportBet.Api/auto-generated/SportBet-api.yaml
