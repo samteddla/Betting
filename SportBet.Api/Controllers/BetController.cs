@@ -160,7 +160,7 @@ public class BetController : ApiController
     }
 
     // update-bet-result/{matchtypeid}
-    [HttpPut("update-bet-result/{matchtypeid}")]
+    [HttpPut("update-bet-result/{matchtypeId}")]
     public async Task<ActionResult<UpdateBetResult>> UpdateBetResult(int matchtypeId, UpdateBetResultRequest request)
     {
         var result = await Sender.Send(new UpdateBetResultCommand(

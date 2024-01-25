@@ -3,7 +3,7 @@
 	"editor.inlineSuggest.enabled": true,
 	"git.confirmSync": false,
 	"editor.fontFamily": "'Cascadia Code Light', 'Courier New', monospace",
-	"workbench.colorTheme": "Nord",
+	"workbench.colorTheme": "Visual Studio Light",
 	"files.autoSave": "onFocusChange",
 	"explorer.confirmDelete": false,
 	"github.copilot.enable": {

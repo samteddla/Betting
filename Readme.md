@@ -3,9 +3,18 @@
 dotnet tool install --global dotnet-ef --version 7.0.0-*
 
 dotnet tool update --global dotnet-ef 
+
+dotnet tool update -g Dotnet-aspnet-codegenerator
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design   
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+
 dotnet add package Microsoft.EntityFrameworkCore.SqlServer
-dotnet add package Microsoft.EntityFrameworkCore.Design     
+dotnet add package Microsoft.EntityFrameworkCore.Design  
+
 dotnet ef dbcontext scaffold "Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=BetWise;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False" Microsoft.EntityFrameworkCore.SqlServer -o Model -c BetContext --context-dir Context -f --force
+
+// defaultConnections must be added
+services.AddDbContext<BetContext>(options => options.UseSqlServer(defaultConnections.DefaultConnection));
 
 dotnet ef migrations add Initial -o Migrations -c BettingContext   
 dotnet ef database update -c BettingContext
