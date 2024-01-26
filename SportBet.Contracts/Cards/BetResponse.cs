@@ -20,6 +20,6 @@ public record SelectionMatchResponse(int MatchSelectionId, int MatchId, int Home
 public record GetMatchTypes(int MatchTypeId, string Name);
 public record GetOutcomes(int Id, int OutcomeId, string Name, bool IsEnabled);
 public record UpdateBetResult(string Message);
-public record UpdateBetResultRequest(int MatchTypeId, int MatchSelectionId, int MatchId, int OutcomeId);
+public record UpdateBetResultRequest(int MatchId, int OutcomeId);
 public record MatchRequest(int MatchId, int OutcomeId);
 

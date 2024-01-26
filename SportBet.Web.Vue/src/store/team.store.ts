@@ -1,31 +1,25 @@
 
 import { defineStore } from "pinia";
 import { AxiosClient } from "@/services";
-import { useAlertStore } from "@/store";
-import { TeamApi } from '@/api/index'
 import { ref } from "vue";
-import { type TeamResponse } from '@/api/index'
+import { Client, type TeamResponse } from '@/api/api2'
 
 export const TeamStore = defineStore("team", () => {
     const axiosClient = AxiosClient.getApi();
-    const alertStore = useAlertStore();
     const team = ref(<TeamResponse>[]);
     const teams = ref<TeamResponse[]>([])
 
-    const api = new TeamApi(undefined, undefined, axiosClient);
+    const api = new Client(undefined, axiosClient);
    
     const getTeams = async () => {
         teams.value = await api.getTeams().then((response) => {
-            return response.data;
+            return response;
         });
     }
     
     const addTeam = async (team: any) => {
         team.value = await api.addTeam(team).then((response) => {
-            if (response.status === 201) {
-                alertStore.success("Team added successfully");
-            }
-            return response.data;
+            return response;
         });
     }
     return {teams,team, getTeams,  addTeam };

@@ -1,12 +1,11 @@
 import { defineStore } from "pinia";
+import { ref } from "vue";
 import { AxiosClient } from "@/services";
 import { useAlertStore } from "@/store";
-import { BetApi } from '@/api/index'
-import { ref } from "vue";
+import { Client } from '@/api/api2'
 
 import {type MyBetExtende, type GetActiveMatchs, type GetActiveMatch, type BetOnGame, type GetActivBetsResponse, type BetResultResponse,
-type MyBet } from "@/api/index";
-import { get } from "node:http";
+type MyBet, type UpdateBetResult } from "@/api/api2";
 
 export const MatchStore = defineStore("match", () => {
 
@@ -19,12 +18,21 @@ export const MatchStore = defineStore("match", () => {
     const cardExtended = ref<MyBetExtende>()
     const playedCard = ref<MyBet[]>()
     const playOutcome = ref<{ matchId: number; outcomeId: number }[]>([]);  
+    const updatedBetResult = ref<UpdateBetResult[]>();
 
-    const api = new BetApi(undefined, undefined, axiosClient);
+    const api = new Client(undefined, axiosClient);
+    
+    const updateBetResult = async (betResult: any) => {
+        betResult.UpdateBetResultRequest = createPlayOutCome(betResult.UpdateBetResultRequest);
+        updatedBetResult.value = await api.updateBetResult(betResult.matchtypeId,betResult.matchSelectionId,betResult.UpdateBetResultRequest).then((response) => {
+            return response;
+        });
+    }
 
     const getMatches = async () => {
-        matchs.value = await api.betGetMatchSelectionsGet().then((response) => {
-            return response.data;
+        
+        matchs.value = await api.getMatchSelectionsAll().then((response) => {
+            return response;
         });
 
         if(matchs.value.length == 0){
@@ -38,8 +46,8 @@ export const MatchStore = defineStore("match", () => {
     }
 
     const getMatch = async (id: number) => {
-        match.value = await api.betGetMatchSelectionsIdGet(id).then((response) => {
-            return response.data;
+        match.value = await api.getMatchSelections(id).then((response) => {
+            return response;
         });
     }
    
@@ -47,63 +55,47 @@ export const MatchStore = defineStore("match", () => {
         
         betOnRequest.matches = createPlayOutCome(betOnRequest.matches);
 
-        return await api.betBetOnPost(betOnRequest).then((response) => {
-            const res = response;
-            if(res.status === 200){
-                alertStore.info("ok");
-                console.log(res.data);
-            }
-            else
-            {
-                alertStore.error("data provided is not valid");
-            }
-            return response.data;
+        return await api.betOn(betOnRequest).then((response) => {            
+            return response;
         });
     }
 
     const getMyCards = async () => {
-        cards.value = await api.betGetActiveBetsGet().then((response) => {
-            return response.data;
+        cards.value = await api.getActiveBets().then((response) => {
+            return response;
         });
     }
 
     const getMyCardDetail = async (id: number) => {
-        card.value = await api.betGetBetResultIdGet(id).then((response) => {
-            console.log(response.data);
-            return response.data;
+        card.value = await api.getBetResult(id).then((response) => {
+            return response;
         });
     }
 
     const getMyCardExtende = async (id: number) => {
-        cardExtended.value = await api.betGetCardExtendedIdGet(id).then((response) => {
+        cardExtended.value = await api.getCardExtended(id).then((response) => {
         
-            playOutcome.value = response.data.matches.map((c) => {
+            playOutcome.value = (response.matches === null || response.matches === undefined)? null 
+            : response.matches.map((c : any) => {
                 return { matchId: c.matchId, outcomeId: c.outcomeId};
             });
-            console.log("playedCard.value");
+
             console.log(playOutcome.value);
-            console.log("playedCard.value");
             reversePlayOutcome(playOutcome.value);
 
-            console.log("cardExtended.value");
-            console.log(response.data);
-            console.log("cardExtended.value");
-            return response.data;
+            return response;
         });
     }
 
     // remove this ????
     const getPlayedCard = async (id: number) => {
         await getMyCardExtende(id);
-        playedCard.value = await api.betGetCardIdGet(id).then((response) => {
-            console.log("playedCard.value");
-            console.log(response.data);
-            console.log("playedCard.value");
-            return response.data;
+        playedCard.value = await api.getCard(id).then((response) => {
+            return response;
         });
 
         if(playedCard.value !== null){
-            playOutcome.value = playedCard.value.map((c) => {
+            playOutcome.value = playedCard.value.map((c : any) => {
                 return { matchId: c.matchId, outcomeId: c.outcomeId };
             });
 
@@ -166,5 +158,5 @@ export const MatchStore = defineStore("match", () => {
         return result;
     }
 
-    return { cardExtended, match, matchs,cards,card,playedCard,playOutcome, getMatches, getMatch, betOn, getMyCards, getMyCardDetail, getPlayedCard, getMyCardExtende };
+    return {updatedBetResult, cardExtended, match, matchs,cards,card,playedCard,playOutcome,updateBetResult, getMatches, getMatch, betOn, getMyCards, getMyCardDetail, getPlayedCard, getMyCardExtende };
 });

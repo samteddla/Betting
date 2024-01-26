@@ -1,0 +1,1179 @@
+openapi: 3.0.1
+info:
+  title: Api
+  version: v1
+paths:
+  /Auth:
+    post:
+      tags:
+      - Auth
+      operationId: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AuthenticationResult'
+  /Auth/add-user:
+    post:
+      tags:
+      - Auth
+      operationId: add-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddUserRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AddUserRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AddUserRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/AddUserResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AddUserResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/AddUserResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Auth/update-user:
+    put:
+      tags:
+      - Auth
+      operationId: update-user
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Auth/change-password:
+    put:
+      tags:
+      - Auth
+      operationId: change-password
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/ChangePasswordRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ChangePasswordResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChangePasswordResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ChangePasswordResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-cards:
+    get:
+      tags:
+      - Bet
+      operationId: get-cards
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyBets'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyBets'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyBets'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-card/{id}:
+    get:
+      tags:
+      - Bet
+      operationId: get-card
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyBet'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyBet'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MyBet'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-card-extended/{id}:
+    get:
+      tags:
+      - Bet
+      operationId: get-card-extended
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/MyBetExtende'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MyBetExtende'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/MyBetExtende'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-active-bets:
+    get:
+      tags:
+      - Bet
+      operationId: get-active-bets
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetActivBetsResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetActivBetsResponse'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetActivBetsResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/create-match-selection:
+    post:
+      tags:
+      - Bet
+      operationId: create-match-selection
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateMatchSelectionsRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/CreateMatchSelectionsRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/CreateMatchSelectionsRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/CreateMatchSelectionsResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateMatchSelectionsResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/CreateMatchSelectionsResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/bet-on:
+    post:
+      tags:
+      - Bet
+      operationId: bet-on
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/BetOnGame'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/BetOnGame'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/BetOnGame'
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BetOnGameResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BetOnGameResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BetOnGameResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-bet-result/{id}:
+    get:
+      tags:
+      - Bet
+      operationId: get-bet-result
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/BetResultResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BetResultResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/BetResultResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-match-selections:
+    get:
+      tags:
+      - Bet
+      operationId: get-match-selectionsAll
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetActiveMatchs'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetActiveMatchs'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetActiveMatchs'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-match-selections/{id}:
+    get:
+      tags:
+      - Bet
+      operationId: get-match-selections
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetActiveMatch'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetActiveMatch'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetActiveMatch'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-match-types:
+    get:
+      tags:
+      - Bet
+      operationId: get-match-typesAll
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetMatchTypes'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetMatchTypes'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetMatchTypes'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-match-types/{id}:
+    get:
+      tags:
+      - Bet
+      operationId: get-match-types
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetMatchTypes'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMatchTypes'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetMatchTypes'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-outcomes:
+    get:
+      tags:
+      - Bet
+      operationId: get-outcomes
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetOutcomes'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetOutcomes'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetOutcomes'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/update-bet-result/{matchtypeId}/{matchSelectionId}:
+    put:
+      tags:
+      - Bet
+      operationId: update-bet-result
+      parameters:
+      - name: matchtypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: matchSelectionId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBetResultRequest'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBetResultRequest'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/UpdateBetResultRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UpdateBetResult'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UpdateBetResult'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UpdateBetResult'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Team:
+    get:
+      tags:
+      - Team
+      operationId: GetTeams
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamResponse'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamResponse'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TeamResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+    post:
+      tags:
+      - Team
+      operationId: AddTeam
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddTeamCommand'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AddTeamCommand'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AddTeamCommand'
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/TeamResponse'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+components:
+  schemas:
+    AddTeamCommand:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          nullable: true
+        shortName:
+          type: string
+          nullable: true
+    AddUserRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        username:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        middleName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+    AddUserResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        statusName:
+          type: string
+          nullable: true
+    AuthenticationResult:
+      type: object
+      additionalProperties: false
+      properties:
+        token:
+          type: string
+          nullable: true
+        userId:
+          type: integer
+          format: int32
+    BetOnGame:
+      type: object
+      additionalProperties: false
+      properties:
+        selectionId:
+          type: integer
+          format: int32
+        matchTypeId:
+          type: integer
+          format: int32
+        matches:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/MatchRequest'
+        amount:
+          type: number
+          format: double
+    BetOnGameResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        statusName:
+          type: string
+          nullable: true
+        isSaved:
+          type: boolean
+    BetResultResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        matches:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/MatchResponse'
+        betAmount:
+          type: number
+          format: double
+        wonAmount:
+          type: number
+          format: double
+        totalWinCount:
+          type: integer
+          format: int32
+        cardId:
+          type: integer
+          format: int32
+        matchSelectionId:
+          type: integer
+          format: int32
+        matchTypeId:
+          type: integer
+          format: int32
+    ChangePasswordRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        password:
+          type: string
+          nullable: true
+        newPassword:
+          type: string
+          nullable: true
+    ChangePasswordResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        statusName:
+          type: string
+          nullable: true
+    CreateMatchSelectionsRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        activeUntil:
+          type: string
+          format: date-time
+        matches:
+          type: array
+          nullable: true
+          items:
+            type: integer
+            format: int32
+        matchesTypes:
+          type: array
+          nullable: true
+          items:
+            type: integer
+            format: int32
+    CreateMatchSelectionsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        matchSelectionId:
+          type: integer
+          format: int32
+        statusName:
+          type: string
+          nullable: true
+        isSaved:
+          type: boolean
+    GetActivBetsResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        typeName:
+          type: string
+          nullable: true
+        isEnabled:
+          type: boolean
+    GetActiveMatch:
+      type: object
+      additionalProperties: false
+      properties:
+        matchSelectionId:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        activeUntil:
+          type: string
+          format: date-time
+        matches:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/SelectionMatchResponse'
+    GetActiveMatchs:
+      type: object
+      additionalProperties: false
+      properties:
+        matchSelectionId:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        description:
+          type: string
+          nullable: true
+        isEnabled:
+          type: boolean
+    GetMatchTypes:
+      type: object
+      additionalProperties: false
+      properties:
+        matchTypeId:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+    GetOutcomes:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        outcomeId:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        isEnabled:
+          type: boolean
+    LoginRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        username:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+    MatchRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        matchId:
+          type: integer
+          format: int32
+        outcomeId:
+          type: integer
+          format: int32
+    MatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        matchId:
+          type: integer
+          format: int32
+        outcomeId:
+          type: integer
+          format: int32
+        matchResultId:
+          type: integer
+          format: int32
+        matchResult:
+          type: string
+          nullable: true
+    MyBet:
+      type: object
+      additionalProperties: false
+      properties:
+        betCardId:
+          type: integer
+          format: int32
+        matchId:
+          type: integer
+          format: int32
+        homeTeam:
+          type: string
+          nullable: true
+        home:
+          type: string
+          nullable: true
+        awayTeam:
+          type: string
+          nullable: true
+        away:
+          type: string
+          nullable: true
+        matchType:
+          type: string
+          nullable: true
+        outcomeId:
+          type: integer
+          format: int32
+        outcomeName:
+          type: string
+          nullable: true
+        createdAt:
+          type: string
+          format: date-time
+        matchSelectionId:
+          type: integer
+          format: int32
+        matchSelectionName:
+          type: string
+          nullable: true
+        matchSelectionDescription:
+          type: string
+          nullable: true
+    MyBetExtende:
+      type: object
+      additionalProperties: false
+      properties:
+        betCardId:
+          type: integer
+          format: int32
+        createdAt:
+          type: string
+          format: date-time
+        matchSelectionId:
+          type: integer
+          format: int32
+        matchSelectionName:
+          type: string
+          nullable: true
+        matchSelectionDescription:
+          type: string
+          nullable: true
+        betAmount:
+          type: number
+          format: double
+        wonAmount:
+          type: number
+          format: double
+        totalWinCount:
+          type: integer
+          format: int32
+        matchType:
+          type: string
+          nullable: true
+        matches:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/MyBetMatchExtend'
+    MyBetMatchExtend:
+      type: object
+      additionalProperties: false
+      properties:
+        matchId:
+          type: integer
+          format: int32
+        homeTeam:
+          type: string
+          nullable: true
+        home:
+          type: string
+          nullable: true
+        awayTeam:
+          type: string
+          nullable: true
+        away:
+          type: string
+          nullable: true
+        outcomeId:
+          type: integer
+          format: int32
+        outcomeName:
+          type: string
+          nullable: true
+        matchResultId:
+          type: integer
+          format: int32
+        matchResult:
+          type: string
+          nullable: true
+    MyBets:
+      type: object
+      additionalProperties: false
+      properties:
+        betCardId:
+          type: integer
+          format: int32
+        matchSelectionId:
+          type: integer
+          format: int32
+        matchTypeId:
+          type: integer
+          format: int32
+        matchSelection:
+          type: string
+          nullable: true
+        matchType:
+          type: string
+          nullable: true
+    SelectionMatchResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        matchSelectionId:
+          type: integer
+          format: int32
+        matchId:
+          type: integer
+          format: int32
+        homeId:
+          type: integer
+          format: int32
+        home:
+          type: string
+          nullable: true
+        homeTeam:
+          type: string
+          nullable: true
+        awayId:
+          type: integer
+          format: int32
+        awayTeam:
+          type: string
+          nullable: true
+        away:
+          type: string
+          nullable: true
+        matchDate:
+          type: string
+          format: date-time
+    TeamResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          nullable: true
+        shortName:
+          type: string
+          nullable: true
+    UpdateBetResult:
+      type: object
+      additionalProperties: false
+      properties:
+        message:
+          type: string
+          nullable: true
+    UpdateBetResultRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        matchId:
+          type: integer
+          format: int32
+        outcomeId:
+          type: integer
+          format: int32
+    UpdateUserRequest:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        username:
+          type: string
+          nullable: true
+        password:
+          type: string
+          nullable: true
+        firstName:
+          type: string
+          nullable: true
+        middleName:
+          type: string
+          nullable: true
+        lastName:
+          type: string
+          nullable: true
+        phoneNumber:
+          type: string
+          nullable: true
+        email:
+          type: string
+          nullable: true
+    UpdateUserResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          format: int32
+        statusName:
+          type: string
+          nullable: true
+  securitySchemes:
+    bearer:
+      type: http
+      description: JWT Authorization using the Bearer scheme.
+      scheme: Bearer
+      bearerFormat: jwt

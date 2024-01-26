@@ -17,7 +17,7 @@
                     <td>{{ m.name }}</td>
                     <td>{{ m.description }}</td>
                     <td>{{ m.isEnabled }}</td>
-                    <td><RouterLink :to="{ name: 'Game', params: { id: m.matchSelectionId }}">View</RouterLink></td>              
+                    <td><RouterLink :to="{ name: 'Result', params: { id: m.matchSelectionId }}">View</RouterLink></td>              
                 </tr>
             </tbody>
         </table>

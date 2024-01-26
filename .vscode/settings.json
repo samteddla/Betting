@@ -3,7 +3,8 @@
 	"editor.inlineSuggest.enabled": true,
 	"git.confirmSync": false,
 	"editor.fontFamily": "'Cascadia Code Light', 'Courier New', monospace",
-	"workbench.colorTheme": "Visual Studio Light",
+	"editor.fontSize": 16,
+	"workbench.colorTheme": "Nord Native",
 	"files.autoSave": "onFocusChange",
 	"explorer.confirmDelete": false,
 	"github.copilot.enable": {
@@ -79,7 +80,6 @@
 			"authenticationType": "Integrated"
 		}
 	],
-	"editor.fontSize": 18,
 	"workbench.preferredDarkColorTheme": "GitHub Light",
 	"terminal.integrated.tabs.defaultColor": "terminal.ansiGreen",
 	"editor.codeActionsOnSave": {

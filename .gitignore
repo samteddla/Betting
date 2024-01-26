@@ -397,4 +397,4 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 SportBet.Infrastructure/Migrations/
-zRequest/SportBet.http
+SportBet.Web.TypeScript/auto-generated/

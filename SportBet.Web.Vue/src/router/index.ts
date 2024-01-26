@@ -48,6 +48,11 @@ const routes = [
     component: () => import('@/views/Game.vue'),
   },
   {
+    path : '/result/:id',
+    name : 'Result',
+    component : () => import('@/views/Result.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*',
     name: 'NotFound',
     component: () => import('@/views/NotFound.vue'),

@@ -6,15 +6,15 @@ import { useAlertStore } from "@/store";
 import { ref } from "vue";
 import { jwtDecode } from "jwt-decode";
 
-import { type AuthenticationResult, type LoginRequest, type ChangePasswordRequest, type ChangePasswordResponse } from '@/api/index'
-import { AuthApi } from '@/api/api'
+import { type AuthenticationResult, type LoginRequest, type ChangePasswordRequest, type ChangePasswordResponse } from '@/api/api2'
+import { Client } from '@/api/api2'
 
 export const AuthStore = defineStore("auth", () => {
 
   const user = ref<AuthenticationResult>(JSON.parse(localStorage.getItem("user")?.toString() || "null"));
   const returnUrl = ref<null | string>(null);
   const axiosClient = AxiosClient.getApi();
-  const api = new AuthApi(undefined, undefined, axiosClient);
+  const api = new Client(undefined, axiosClient);
 
   const alertStore = useAlertStore();
   const passwordResponse = ref<ChangePasswordResponse>();
@@ -28,7 +28,7 @@ export const AuthStore = defineStore("auth", () => {
       return res;
     });
     if (response !== null) {
-      user.value = response.data;
+      user.value = response;
       alertStore.info("ok");
       // console.log(response.data);
       localStorage.setItem("user", JSON.stringify(user.value));
@@ -48,8 +48,8 @@ export const AuthStore = defineStore("auth", () => {
   }
 
   const changePassword = async (passwordReq: ChangePasswordRequest) => {
-    passwordResponse.value = await api.authChangePasswordPut(passwordReq).then((response) => {
-      return response.data;
+    passwordResponse.value = await api.changePassword(passwordReq).then((response) => {
+      return response;
     });
   }
 

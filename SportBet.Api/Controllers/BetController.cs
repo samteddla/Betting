@@ -59,11 +59,11 @@ public class BetController : ApiController
 
     // create match selections
     [HttpPost("create-match-selection")]
-    public async Task<ActionResult<CreateMatchSelectionsResponse>> CreateMatchSelection(CreateMatchSelectionsRequest request)
+    public async Task<ActionResult<CreateMatchSelectionsResponse>> CreateMatchSelection([FromBody] CreateMatchSelectionsRequest request)
     {
         var result = await Sender.Send(new CreateMatchSelectionsCommand(
-                                                Name: request.Name,
-                                                Description: request.Description,
+                                               Name: request.Name,
+                                               Description: request.Description,
                                                ActiveUntil: request.ActiveUntil,
                                                Matches: request.Matches,
                                                MatchesTypes: request.MatchesTypes));
@@ -75,7 +75,7 @@ public class BetController : ApiController
 
     // bet on selection
     [HttpPost("bet-on")]
-    public async Task<ActionResult<BetOnGameResponse>> BetOnSelection(BetOnGame request)
+    public async Task<ActionResult<BetOnGameResponse>> BetOnSelection([FromBody] BetOnGame request)
     {
         var result = await Sender.Send(new BetOnSelectionCommand(
             SelectionId: request.SelectionId,
@@ -160,14 +160,13 @@ public class BetController : ApiController
     }
 
     // update-bet-result/{matchtypeid}
-    [HttpPut("update-bet-result/{matchtypeId}")]
-    public async Task<ActionResult<UpdateBetResult>> UpdateBetResult(int matchtypeId, UpdateBetResultRequest request)
+    [HttpPut("update-bet-result/{matchtypeId}/{matchSelectionId}")]
+    public async Task<ActionResult<IEnumerable<UpdateBetResult>>> UpdateBetResult(int matchtypeId,int matchSelectionId, IEnumerable<UpdateBetResultRequest> request)
     {
-        var result = await Sender.Send(new UpdateBetResultCommand(
-            matchtypeId,
-            request.MatchSelectionId,
-            request.MatchId,
-            request.OutcomeId));
+        var result = await Sender.Send(new UpdateBetResultsCommand(
+            MatchTypeId : matchtypeId,
+            MatchSelectionId : matchSelectionId,
+            UpdateBetResultRequests : request));
 
         return result.Match(
             base.Ok,

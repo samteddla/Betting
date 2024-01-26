@@ -9,50 +9,18 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.13" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.19.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
     <PackageReference Include="Serilog.AspNetCore" Version="8.0.1" />     
     <PackageReference Include="Serilog.Sinks.Graylog" Version="3.1.1" />
     <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SportBet.Application\SportBet.Application.csproj" />
     <ProjectReference Include="..\SportBet.Contracts\SportBet.Contracts.csproj" />
   </ItemGroup>
-
- <ItemGroup>
-		<PackageReference Include="NSwag.MSBuild" Version="13.20.0">
-			<PrivateAssets>all</PrivateAssets>
-			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-		</PackageReference>
-		<PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
-		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
-	</ItemGroup>
-
-
-	<ItemGroup>
-		<None Update="nswag.json">
-			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
-		</None>
-	</ItemGroup>
-
-<PropertyGroup>
-  <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
-</PropertyGroup>
-
-	<Target Name="NSwag" AfterTargets="Build">
-		<Exec ConsoleToMSBuild="true" ContinueOnError="true" Command="$(NSwagExe_Net70) run nswag.json /variables:Configuration=$(Configuration)">
-			<Output TaskParameter="ExitCode" PropertyName="NSwagExitCode" />
-			<Output TaskParameter="ConsoleOutput" PropertyName="NSwagOutput" />
-		</Exec>
-		<Message Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' == '0'" Importance="Low" />
-		<Error Text="$(NSwagOutput)" Condition="'$(NSwagExitCode)' != '0'" />
-	</Target>
-	
-	<Target Name="RunJavaJar" AfterTargets="NSwag">
-      <Exec Command="Y:\Bin\jdk-21.0.2\bin\java.exe -jar Y:\bin\swagger-codegen-cli-3.0.52.jar generate -i .\auto-generated\SportBet-api.yaml -l typescript-axios -o .\auto-generated\src\api --flatten-inline-schema true" />
-  </Target>
 </Project>

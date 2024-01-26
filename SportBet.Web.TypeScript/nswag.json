@@ -1,55 +1,11 @@
 {
-    "runtime": "Net70",
+    "runtime": "Net80",
     "defaultVariables": null,
     "documentGenerator": {
-      "webApiToOpenApi": {
-        "controllerNames": [],
-        "isAspNetCore": true,
-        "resolveJsonOptions": false,
-        "defaultUrlTemplate": "api/{controller}/{id?}",
-        "addMissingPathParameters": false,
-        "includedVersions": null,
-        "defaultPropertyNameHandling": "Default",
-        "defaultReferenceTypeNullHandling": "Null",
-        "defaultDictionaryValueReferenceTypeNullHandling": "NotNull",
-        "defaultResponseReferenceTypeNullHandling": "NotNull",
-        "defaultEnumHandling": "String",
-        "flattenInheritanceHierarchy": false,
-        "generateKnownTypes": true,
-        "generateEnumMappingDescription": false,
-        "generateXmlObjects": false,
-        "generateAbstractProperties": false,
-        "generateAbstractSchemas": true,
-        "ignoreObsoleteProperties": false,
-        "allowReferencesWithProperties": false,
-        "excludedTypeNames": [],
-        "serviceHost": null,
-        "serviceBasePath": null,
-        "serviceSchemes": [],
-        "infoTitle": "PizzaStore Web Api",
-        "infoDescription": null,
-        "infoVersion": "1.0.0",
-        "documentTemplate": null,
-        "documentProcessorTypes": [],
-        "operationProcessorTypes": [],
-        "typeNameGeneratorType": null,
-        "schemaNameGeneratorType": null,
-        "contractResolverType": null,
-        "serializerSettingsType": null,
-        "useDocumentProvider": true,
-        "documentName": "v1",
-        "aspNetCoreEnvironment": null,
-        "createWebHostBuilderMethod": null,
-        "startupType": null,
-        "allowNullableBodyParameters": true,
-        "output": "./auto-generated/SportBet-api.yaml",
-        "outputType": "Swagger2",
-        "assemblyPaths": [
-          "../SportBet.Api/bin/$(Configuration)/net7.0/SportBet.Api.dll"
-        ],
-        "assemblyConfig": null,
-        "referencePaths": [],
-        "useNuGetCache": false
+      "fromDocument": {
+        "url": "http://localhost:5002/swagger/v1/swagger.json",
+        "output": "api.yaml",
+        "newLineBehavior": "Auto"
       }
     },
     "codeGenerators": {
@@ -66,7 +22,7 @@
         "injectionTokenType": "OpaqueToken",
         "rxJsVersion": 6.0,
         "dateTimeType": "Date",
-        "nullValue": "null",
+        "nullValue": "Undefined",
         "generateClientClasses": true,
         "generateClientInterfaces": false,
         "generateOptionalParameters": false,
@@ -86,7 +42,7 @@
         "operationGenerationMode": "MultipleClientsFromOperationId",
         "markOptionalProperties": true,
         "generateCloneMethod": false,
-        "typeStyle": "Interface",
+        "typeStyle": "Class",
         "enumStyle": "Enum",
         "useLeafType": false,
         "classTypes": [],
@@ -110,7 +66,7 @@
         "templateDirectory": null,
         "serviceHost": null,
         "serviceSchemes": null,
-        "output": "./auto-generated/SportBet.ts",
+        "output": "../SportBet.Web.Vue/src/api/api2.ts",
         "newLineBehavior": "Auto"
       }
     }

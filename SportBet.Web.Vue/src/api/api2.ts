@@ -70,7 +70,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));
+            result200 = AuthenticationResult.fromJS(resultData200);
             return Promise.resolve<AuthenticationResult>(result200);
 
         } else if (status !== 200 && status !== 204) {
@@ -126,7 +126,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = AddUserResponse.fromJS(resultData200);
             return Promise.resolve<AddUserResponse>(result200);
 
         } else if (status === 401) {
@@ -190,7 +190,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = UpdateUserResponse.fromJS(resultData200);
             return Promise.resolve<UpdateUserResponse>(result200);
 
         } else if (status === 401) {
@@ -254,7 +254,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = ChangePasswordResponse.fromJS(resultData200);
             return Promise.resolve<ChangePasswordResponse>(result200);
 
         } else if (status === 401) {
@@ -313,7 +313,14 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MyBets.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return Promise.resolve<MyBets[]>(result200);
 
         } else if (status === 401) {
@@ -375,7 +382,14 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(MyBet.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return Promise.resolve<MyBet[]>(result200);
 
         } else if (status === 401) {
@@ -437,7 +451,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = MyBetExtende.fromJS(resultData200);
             return Promise.resolve<MyBetExtende>(result200);
 
         } else if (status === 401) {
@@ -496,7 +510,14 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GetActivBetsResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return Promise.resolve<GetActivBetsResponse[]>(result200);
 
         } else if (status === 401) {
@@ -560,7 +581,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = CreateMatchSelectionsResponse.fromJS(resultData200);
             return Promise.resolve<CreateMatchSelectionsResponse>(result200);
 
         } else if (status === 401) {
@@ -624,7 +645,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = BetOnGameResponse.fromJS(resultData200);
             return Promise.resolve<BetOnGameResponse>(result200);
 
         } else if (status === 401) {
@@ -686,7 +707,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = BetResultResponse.fromJS(resultData200);
             return Promise.resolve<BetResultResponse>(result200);
 
         } else if (status === 401) {
@@ -745,7 +766,14 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GetActiveMatchs.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return Promise.resolve<GetActiveMatchs[]>(result200);
 
         } else if (status === 401) {
@@ -807,7 +835,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = GetActiveMatch.fromJS(resultData200);
             return Promise.resolve<GetActiveMatch>(result200);
 
         } else if (status === 401) {
@@ -866,7 +894,14 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GetMatchTypes.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return Promise.resolve<GetMatchTypes[]>(result200);
 
         } else if (status === 401) {
@@ -928,7 +963,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = GetMatchTypes.fromJS(resultData200);
             return Promise.resolve<GetMatchTypes>(result200);
 
         } else if (status === 401) {
@@ -987,7 +1022,14 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(GetOutcomes.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return Promise.resolve<GetOutcomes[]>(result200);
 
         } else if (status === 401) {
@@ -1009,11 +1051,14 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    updateBetResult(matchtypeId: number, body: UpdateBetResultRequest | undefined, cancelToken?: CancelToken): Promise<UpdateBetResult> {
-        let url_ = this.baseUrl + "/Bet/update-bet-result/{matchtypeid}";
+    updateBetResult(matchtypeId: number, matchSelectionId: number, body: UpdateBetResultRequest[] | undefined, cancelToken?: CancelToken): Promise<UpdateBetResult[]> {
+        let url_ = this.baseUrl + "/Bet/update-bet-result/{matchtypeId}/{matchSelectionId}";
         if (matchtypeId === undefined || matchtypeId === null)
             throw new Error("The parameter 'matchtypeId' must be defined.");
         url_ = url_.replace("{matchtypeId}", encodeURIComponent("" + matchtypeId));
+        if (matchSelectionId === undefined || matchSelectionId === null)
+            throw new Error("The parameter 'matchSelectionId' must be defined.");
+        url_ = url_.replace("{matchSelectionId}", encodeURIComponent("" + matchSelectionId));
         url_ = url_.replace(/[?&]$/, "");
 
         const content_ = JSON.stringify(body);
@@ -1040,7 +1085,7 @@ export class Client {
         });
     }
 
-    protected processUpdateBetResult(response: AxiosResponse): Promise<UpdateBetResult> {
+    protected processUpdateBetResult(response: AxiosResponse): Promise<UpdateBetResult[]> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -1054,8 +1099,15 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
-            return Promise.resolve<UpdateBetResult>(result200);
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(UpdateBetResult.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
+            return Promise.resolve<UpdateBetResult[]>(result200);
 
         } else if (status === 401) {
             const _responseText = response.data;
@@ -1069,7 +1121,7 @@ export class Client {
             const _responseText = response.data;
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
-        return Promise.resolve<UpdateBetResult>(null as any);
+        return Promise.resolve<UpdateBetResult[]>(null as any);
     }
 
     /**
@@ -1113,7 +1165,14 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            if (Array.isArray(resultData200)) {
+                result200 = [] as any;
+                for (let item of resultData200)
+                    result200!.push(TeamResponse.fromJS(item));
+            }
+            else {
+                result200 = <any>null;
+            }
             return Promise.resolve<TeamResponse[]>(result200);
 
         } else if (status === 401) {
@@ -1177,7 +1236,7 @@ export class Client {
             const _responseText = response.data;
             let result200: any = null;
             let resultData200  = _responseText;
-            result200 = JSON.parse(JSON.stringify(resultData200));;
+            result200 = TeamResponse.fromJS(resultData200);
             return Promise.resolve<TeamResponse>(result200);
 
         } else if (status === 401) {
@@ -1196,45 +1255,342 @@ export class Client {
     }
 }
 
-export interface AddTeamCommand {
-    name?: string | null;
-    shortName?: string | null;
+export class AddTeamCommand implements IAddTeamCommand {
+    name?: string | undefined;
+    shortName?: string | undefined;
+
+    constructor(data?: IAddTeamCommand) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.shortName = _data["shortName"];
+        }
+    }
+
+    static fromJS(data: any): AddTeamCommand {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddTeamCommand();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["shortName"] = this.shortName;
+        return data;
+    }
 }
 
-export interface AddUserRequest {
-    username?: string | null;
-    password?: string | null;
-    firstName?: string | null;
-    middleName?: string | null;
-    lastName?: string | null;
-    phoneNumber?: string | null;
-    email?: string | null;
+export interface IAddTeamCommand {
+    name?: string | undefined;
+    shortName?: string | undefined;
 }
 
-export interface AddUserResponse {
+export class AddUserRequest implements IAddUserRequest {
+    username?: string | undefined;
+    password?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    phoneNumber?: string | undefined;
+    email?: string | undefined;
+
+    constructor(data?: IAddUserRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.username = _data["username"];
+            this.password = _data["password"];
+            this.firstName = _data["firstName"];
+            this.middleName = _data["middleName"];
+            this.lastName = _data["lastName"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.email = _data["email"];
+        }
+    }
+
+    static fromJS(data: any): AddUserRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddUserRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["username"] = this.username;
+        data["password"] = this.password;
+        data["firstName"] = this.firstName;
+        data["middleName"] = this.middleName;
+        data["lastName"] = this.lastName;
+        data["phoneNumber"] = this.phoneNumber;
+        data["email"] = this.email;
+        return data;
+    }
+}
+
+export interface IAddUserRequest {
+    username?: string | undefined;
+    password?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    phoneNumber?: string | undefined;
+    email?: string | undefined;
+}
+
+export class AddUserResponse implements IAddUserResponse {
     id?: number;
-    statusName?: string | null;
+    statusName?: string | undefined;
+
+    constructor(data?: IAddUserResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.statusName = _data["statusName"];
+        }
+    }
+
+    static fromJS(data: any): AddUserResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new AddUserResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["statusName"] = this.statusName;
+        return data;
+    }
 }
 
-export interface AuthenticationResult {
-    token?: string | null;
+export interface IAddUserResponse {
+    id?: number;
+    statusName?: string | undefined;
+}
+
+export class AuthenticationResult implements IAuthenticationResult {
+    token?: string | undefined;
+    userId?: number;
+
+    constructor(data?: IAuthenticationResult) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.token = _data["token"];
+            this.userId = _data["userId"];
+        }
+    }
+
+    static fromJS(data: any): AuthenticationResult {
+        data = typeof data === 'object' ? data : {};
+        let result = new AuthenticationResult();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["token"] = this.token;
+        data["userId"] = this.userId;
+        return data;
+    }
+}
+
+export interface IAuthenticationResult {
+    token?: string | undefined;
     userId?: number;
 }
 
-export interface BetOnGame {
+export class BetOnGame implements IBetOnGame {
     selectionId?: number;
     matchTypeId?: number;
-    matches?: MatchRequest[] | null;
+    matches?: MatchRequest[] | undefined;
+    amount?: number;
+
+    constructor(data?: IBetOnGame) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.selectionId = _data["selectionId"];
+            this.matchTypeId = _data["matchTypeId"];
+            if (Array.isArray(_data["matches"])) {
+                this.matches = [] as any;
+                for (let item of _data["matches"])
+                    this.matches!.push(MatchRequest.fromJS(item));
+            }
+            this.amount = _data["amount"];
+        }
+    }
+
+    static fromJS(data: any): BetOnGame {
+        data = typeof data === 'object' ? data : {};
+        let result = new BetOnGame();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["selectionId"] = this.selectionId;
+        data["matchTypeId"] = this.matchTypeId;
+        if (Array.isArray(this.matches)) {
+            data["matches"] = [];
+            for (let item of this.matches)
+                data["matches"].push(item.toJSON());
+        }
+        data["amount"] = this.amount;
+        return data;
+    }
+}
+
+export interface IBetOnGame {
+    selectionId?: number;
+    matchTypeId?: number;
+    matches?: MatchRequest[] | undefined;
     amount?: number;
 }
 
-export interface BetOnGameResponse {
-    statusName?: string | null;
+export class BetOnGameResponse implements IBetOnGameResponse {
+    statusName?: string | undefined;
+    isSaved?: boolean;
+
+    constructor(data?: IBetOnGameResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.statusName = _data["statusName"];
+            this.isSaved = _data["isSaved"];
+        }
+    }
+
+    static fromJS(data: any): BetOnGameResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new BetOnGameResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["statusName"] = this.statusName;
+        data["isSaved"] = this.isSaved;
+        return data;
+    }
+}
+
+export interface IBetOnGameResponse {
+    statusName?: string | undefined;
     isSaved?: boolean;
 }
 
-export interface BetResultResponse {
-    matches?: MatchResponse[] | null;
+export class BetResultResponse implements IBetResultResponse {
+    matches?: MatchResponse[] | undefined;
+    betAmount?: number;
+    wonAmount?: number;
+    totalWinCount?: number;
+    cardId?: number;
+    matchSelectionId?: number;
+    matchTypeId?: number;
+
+    constructor(data?: IBetResultResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            if (Array.isArray(_data["matches"])) {
+                this.matches = [] as any;
+                for (let item of _data["matches"])
+                    this.matches!.push(MatchResponse.fromJS(item));
+            }
+            this.betAmount = _data["betAmount"];
+            this.wonAmount = _data["wonAmount"];
+            this.totalWinCount = _data["totalWinCount"];
+            this.cardId = _data["cardId"];
+            this.matchSelectionId = _data["matchSelectionId"];
+            this.matchTypeId = _data["matchTypeId"];
+        }
+    }
+
+    static fromJS(data: any): BetResultResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new BetResultResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        if (Array.isArray(this.matches)) {
+            data["matches"] = [];
+            for (let item of this.matches)
+                data["matches"].push(item.toJSON());
+        }
+        data["betAmount"] = this.betAmount;
+        data["wonAmount"] = this.wonAmount;
+        data["totalWinCount"] = this.totalWinCount;
+        data["cardId"] = this.cardId;
+        data["matchSelectionId"] = this.matchSelectionId;
+        data["matchTypeId"] = this.matchTypeId;
+        return data;
+    }
+}
+
+export interface IBetResultResponse {
+    matches?: MatchResponse[] | undefined;
     betAmount?: number;
     wonAmount?: number;
     totalWinCount?: number;
@@ -1243,173 +1599,1148 @@ export interface BetResultResponse {
     matchTypeId?: number;
 }
 
-export interface ChangePasswordRequest {
-    password?: string | null;
-    newPassword?: string | null;
+export class ChangePasswordRequest implements IChangePasswordRequest {
+    password?: string | undefined;
+    newPassword?: string | undefined;
+
+    constructor(data?: IChangePasswordRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.password = _data["password"];
+            this.newPassword = _data["newPassword"];
+        }
+    }
+
+    static fromJS(data: any): ChangePasswordRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new ChangePasswordRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["password"] = this.password;
+        data["newPassword"] = this.newPassword;
+        return data;
+    }
 }
 
-export interface ChangePasswordResponse {
+export interface IChangePasswordRequest {
+    password?: string | undefined;
+    newPassword?: string | undefined;
+}
+
+export class ChangePasswordResponse implements IChangePasswordResponse {
     id?: number;
-    statusName?: string | null;
+    statusName?: string | undefined;
+
+    constructor(data?: IChangePasswordResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.statusName = _data["statusName"];
+        }
+    }
+
+    static fromJS(data: any): ChangePasswordResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new ChangePasswordResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["statusName"] = this.statusName;
+        return data;
+    }
 }
 
-export interface CreateMatchSelectionsRequest {
-    name?: string | null;
-    description?: string | null;
+export interface IChangePasswordResponse {
+    id?: number;
+    statusName?: string | undefined;
+}
+
+export class CreateMatchSelectionsRequest implements ICreateMatchSelectionsRequest {
+    name?: string | undefined;
+    description?: string | undefined;
     activeUntil?: Date;
-    matches?: number[] | null;
-    matchesTypes?: number[] | null;
+    matches?: number[] | undefined;
+    matchesTypes?: number[] | undefined;
+
+    constructor(data?: ICreateMatchSelectionsRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.activeUntil = _data["activeUntil"] ? new Date(_data["activeUntil"].toString()) : <any>undefined;
+            if (Array.isArray(_data["matches"])) {
+                this.matches = [] as any;
+                for (let item of _data["matches"])
+                    this.matches!.push(item);
+            }
+            if (Array.isArray(_data["matchesTypes"])) {
+                this.matchesTypes = [] as any;
+                for (let item of _data["matchesTypes"])
+                    this.matchesTypes!.push(item);
+            }
+        }
+    }
+
+    static fromJS(data: any): CreateMatchSelectionsRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateMatchSelectionsRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["activeUntil"] = this.activeUntil ? this.activeUntil.toISOString() : <any>undefined;
+        if (Array.isArray(this.matches)) {
+            data["matches"] = [];
+            for (let item of this.matches)
+                data["matches"].push(item);
+        }
+        if (Array.isArray(this.matchesTypes)) {
+            data["matchesTypes"] = [];
+            for (let item of this.matchesTypes)
+                data["matchesTypes"].push(item);
+        }
+        return data;
+    }
 }
 
-export interface CreateMatchSelectionsResponse {
+export interface ICreateMatchSelectionsRequest {
+    name?: string | undefined;
+    description?: string | undefined;
+    activeUntil?: Date;
+    matches?: number[] | undefined;
+    matchesTypes?: number[] | undefined;
+}
+
+export class CreateMatchSelectionsResponse implements ICreateMatchSelectionsResponse {
     matchSelectionId?: number;
-    statusName?: string | null;
+    statusName?: string | undefined;
+    isSaved?: boolean;
+
+    constructor(data?: ICreateMatchSelectionsResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchSelectionId = _data["matchSelectionId"];
+            this.statusName = _data["statusName"];
+            this.isSaved = _data["isSaved"];
+        }
+    }
+
+    static fromJS(data: any): CreateMatchSelectionsResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new CreateMatchSelectionsResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchSelectionId"] = this.matchSelectionId;
+        data["statusName"] = this.statusName;
+        data["isSaved"] = this.isSaved;
+        return data;
+    }
+}
+
+export interface ICreateMatchSelectionsResponse {
+    matchSelectionId?: number;
+    statusName?: string | undefined;
     isSaved?: boolean;
 }
 
-export interface GetActivBetsResponse {
+export class GetActivBetsResponse implements IGetActivBetsResponse {
     id?: number;
-    name?: string | null;
-    description?: string | null;
-    typeName?: string | null;
+    name?: string | undefined;
+    description?: string | undefined;
+    typeName?: string | undefined;
+    isEnabled?: boolean;
+
+    constructor(data?: IGetActivBetsResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.typeName = _data["typeName"];
+            this.isEnabled = _data["isEnabled"];
+        }
+    }
+
+    static fromJS(data: any): GetActivBetsResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetActivBetsResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["typeName"] = this.typeName;
+        data["isEnabled"] = this.isEnabled;
+        return data;
+    }
+}
+
+export interface IGetActivBetsResponse {
+    id?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+    typeName?: string | undefined;
     isEnabled?: boolean;
 }
 
-export interface GetActiveMatch {
+export class GetActiveMatch implements IGetActiveMatch {
     matchSelectionId?: number;
-    name?: string | null;
-    description?: string | null;
+    name?: string | undefined;
+    description?: string | undefined;
     activeUntil?: Date;
-    matches?: SelectionMatchResponse[] | null;
+    matches?: SelectionMatchResponse[] | undefined;
+
+    constructor(data?: IGetActiveMatch) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchSelectionId = _data["matchSelectionId"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.activeUntil = _data["activeUntil"] ? new Date(_data["activeUntil"].toString()) : <any>undefined;
+            if (Array.isArray(_data["matches"])) {
+                this.matches = [] as any;
+                for (let item of _data["matches"])
+                    this.matches!.push(SelectionMatchResponse.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetActiveMatch {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetActiveMatch();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchSelectionId"] = this.matchSelectionId;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["activeUntil"] = this.activeUntil ? this.activeUntil.toISOString() : <any>undefined;
+        if (Array.isArray(this.matches)) {
+            data["matches"] = [];
+            for (let item of this.matches)
+                data["matches"].push(item.toJSON());
+        }
+        return data;
+    }
 }
 
-export interface GetActiveMatchs {
+export interface IGetActiveMatch {
     matchSelectionId?: number;
-    name?: string | null;
-    description?: string | null;
+    name?: string | undefined;
+    description?: string | undefined;
+    activeUntil?: Date;
+    matches?: SelectionMatchResponse[] | undefined;
+}
+
+export class GetActiveMatchs implements IGetActiveMatchs {
+    matchSelectionId?: number;
+    name?: string | undefined;
+    description?: string | undefined;
+    isEnabled?: boolean;
+
+    constructor(data?: IGetActiveMatchs) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchSelectionId = _data["matchSelectionId"];
+            this.name = _data["name"];
+            this.description = _data["description"];
+            this.isEnabled = _data["isEnabled"];
+        }
+    }
+
+    static fromJS(data: any): GetActiveMatchs {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetActiveMatchs();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchSelectionId"] = this.matchSelectionId;
+        data["name"] = this.name;
+        data["description"] = this.description;
+        data["isEnabled"] = this.isEnabled;
+        return data;
+    }
+}
+
+export interface IGetActiveMatchs {
+    matchSelectionId?: number;
+    name?: string | undefined;
+    description?: string | undefined;
     isEnabled?: boolean;
 }
 
-export interface GetMatchTypes {
+export class GetMatchTypes implements IGetMatchTypes {
     matchTypeId?: number;
-    name?: string | null;
+    name?: string | undefined;
+
+    constructor(data?: IGetMatchTypes) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchTypeId = _data["matchTypeId"];
+            this.name = _data["name"];
+        }
+    }
+
+    static fromJS(data: any): GetMatchTypes {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMatchTypes();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchTypeId"] = this.matchTypeId;
+        data["name"] = this.name;
+        return data;
+    }
 }
 
-export interface GetOutcomes {
+export interface IGetMatchTypes {
+    matchTypeId?: number;
+    name?: string | undefined;
+}
+
+export class GetOutcomes implements IGetOutcomes {
     id?: number;
     outcomeId?: number;
-    name?: string | null;
+    name?: string | undefined;
+    isEnabled?: boolean;
+
+    constructor(data?: IGetOutcomes) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.outcomeId = _data["outcomeId"];
+            this.name = _data["name"];
+            this.isEnabled = _data["isEnabled"];
+        }
+    }
+
+    static fromJS(data: any): GetOutcomes {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetOutcomes();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["outcomeId"] = this.outcomeId;
+        data["name"] = this.name;
+        data["isEnabled"] = this.isEnabled;
+        return data;
+    }
+}
+
+export interface IGetOutcomes {
+    id?: number;
+    outcomeId?: number;
+    name?: string | undefined;
     isEnabled?: boolean;
 }
 
-export interface LoginRequest {
-    username?: string | null;
-    password?: string | null;
+export class LoginRequest implements ILoginRequest {
+    username?: string | undefined;
+    password?: string | undefined;
+
+    constructor(data?: ILoginRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.username = _data["username"];
+            this.password = _data["password"];
+        }
+    }
+
+    static fromJS(data: any): LoginRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new LoginRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["username"] = this.username;
+        data["password"] = this.password;
+        return data;
+    }
 }
 
-export interface MatchRequest {
+export interface ILoginRequest {
+    username?: string | undefined;
+    password?: string | undefined;
+}
+
+export class MatchRequest implements IMatchRequest {
+    matchId?: number;
+    outcomeId?: number;
+
+    constructor(data?: IMatchRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchId = _data["matchId"];
+            this.outcomeId = _data["outcomeId"];
+        }
+    }
+
+    static fromJS(data: any): MatchRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new MatchRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchId"] = this.matchId;
+        data["outcomeId"] = this.outcomeId;
+        return data;
+    }
+}
+
+export interface IMatchRequest {
     matchId?: number;
     outcomeId?: number;
 }
 
-export interface MatchResponse {
+export class MatchResponse implements IMatchResponse {
     matchId?: number;
     outcomeId?: number;
     matchResultId?: number;
-    matchResult?: string | null;
+    matchResult?: string | undefined;
+
+    constructor(data?: IMatchResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchId = _data["matchId"];
+            this.outcomeId = _data["outcomeId"];
+            this.matchResultId = _data["matchResultId"];
+            this.matchResult = _data["matchResult"];
+        }
+    }
+
+    static fromJS(data: any): MatchResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new MatchResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchId"] = this.matchId;
+        data["outcomeId"] = this.outcomeId;
+        data["matchResultId"] = this.matchResultId;
+        data["matchResult"] = this.matchResult;
+        return data;
+    }
 }
 
-export interface MyBet {
+export interface IMatchResponse {
+    matchId?: number;
+    outcomeId?: number;
+    matchResultId?: number;
+    matchResult?: string | undefined;
+}
+
+export class MyBet implements IMyBet {
     betCardId?: number;
     matchId?: number;
-    homeTeam?: string | null;
-    home?: string | null;
-    awayTeam?: string | null;
-    away?: string | null;
-    matchType?: string | null;
+    homeTeam?: string | undefined;
+    home?: string | undefined;
+    awayTeam?: string | undefined;
+    away?: string | undefined;
+    matchType?: string | undefined;
     outcomeId?: number;
-    outcomeName?: string | null;
+    outcomeName?: string | undefined;
     createdAt?: Date;
     matchSelectionId?: number;
-    matchSelectionName?: string | null;
-    matchSelectionDescription?: string | null;
+    matchSelectionName?: string | undefined;
+    matchSelectionDescription?: string | undefined;
+
+    constructor(data?: IMyBet) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.betCardId = _data["betCardId"];
+            this.matchId = _data["matchId"];
+            this.homeTeam = _data["homeTeam"];
+            this.home = _data["home"];
+            this.awayTeam = _data["awayTeam"];
+            this.away = _data["away"];
+            this.matchType = _data["matchType"];
+            this.outcomeId = _data["outcomeId"];
+            this.outcomeName = _data["outcomeName"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.matchSelectionId = _data["matchSelectionId"];
+            this.matchSelectionName = _data["matchSelectionName"];
+            this.matchSelectionDescription = _data["matchSelectionDescription"];
+        }
+    }
+
+    static fromJS(data: any): MyBet {
+        data = typeof data === 'object' ? data : {};
+        let result = new MyBet();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["betCardId"] = this.betCardId;
+        data["matchId"] = this.matchId;
+        data["homeTeam"] = this.homeTeam;
+        data["home"] = this.home;
+        data["awayTeam"] = this.awayTeam;
+        data["away"] = this.away;
+        data["matchType"] = this.matchType;
+        data["outcomeId"] = this.outcomeId;
+        data["outcomeName"] = this.outcomeName;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["matchSelectionId"] = this.matchSelectionId;
+        data["matchSelectionName"] = this.matchSelectionName;
+        data["matchSelectionDescription"] = this.matchSelectionDescription;
+        return data;
+    }
 }
 
-export interface MyBetExtende {
+export interface IMyBet {
+    betCardId?: number;
+    matchId?: number;
+    homeTeam?: string | undefined;
+    home?: string | undefined;
+    awayTeam?: string | undefined;
+    away?: string | undefined;
+    matchType?: string | undefined;
+    outcomeId?: number;
+    outcomeName?: string | undefined;
+    createdAt?: Date;
+    matchSelectionId?: number;
+    matchSelectionName?: string | undefined;
+    matchSelectionDescription?: string | undefined;
+}
+
+export class MyBetExtende implements IMyBetExtende {
     betCardId?: number;
     createdAt?: Date;
     matchSelectionId?: number;
-    matchSelectionName?: string | null;
-    matchSelectionDescription?: string | null;
+    matchSelectionName?: string | undefined;
+    matchSelectionDescription?: string | undefined;
     betAmount?: number;
     wonAmount?: number;
     totalWinCount?: number;
-    matchType?: string | null;
-    matches?: MyBetMatchExtend[] | null;
+    matchType?: string | undefined;
+    matches?: MyBetMatchExtend[] | undefined;
+
+    constructor(data?: IMyBetExtende) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.betCardId = _data["betCardId"];
+            this.createdAt = _data["createdAt"] ? new Date(_data["createdAt"].toString()) : <any>undefined;
+            this.matchSelectionId = _data["matchSelectionId"];
+            this.matchSelectionName = _data["matchSelectionName"];
+            this.matchSelectionDescription = _data["matchSelectionDescription"];
+            this.betAmount = _data["betAmount"];
+            this.wonAmount = _data["wonAmount"];
+            this.totalWinCount = _data["totalWinCount"];
+            this.matchType = _data["matchType"];
+            if (Array.isArray(_data["matches"])) {
+                this.matches = [] as any;
+                for (let item of _data["matches"])
+                    this.matches!.push(MyBetMatchExtend.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): MyBetExtende {
+        data = typeof data === 'object' ? data : {};
+        let result = new MyBetExtende();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["betCardId"] = this.betCardId;
+        data["createdAt"] = this.createdAt ? this.createdAt.toISOString() : <any>undefined;
+        data["matchSelectionId"] = this.matchSelectionId;
+        data["matchSelectionName"] = this.matchSelectionName;
+        data["matchSelectionDescription"] = this.matchSelectionDescription;
+        data["betAmount"] = this.betAmount;
+        data["wonAmount"] = this.wonAmount;
+        data["totalWinCount"] = this.totalWinCount;
+        data["matchType"] = this.matchType;
+        if (Array.isArray(this.matches)) {
+            data["matches"] = [];
+            for (let item of this.matches)
+                data["matches"].push(item.toJSON());
+        }
+        return data;
+    }
 }
 
-export interface MyBetMatchExtend {
+export interface IMyBetExtende {
+    betCardId?: number;
+    createdAt?: Date;
+    matchSelectionId?: number;
+    matchSelectionName?: string | undefined;
+    matchSelectionDescription?: string | undefined;
+    betAmount?: number;
+    wonAmount?: number;
+    totalWinCount?: number;
+    matchType?: string | undefined;
+    matches?: MyBetMatchExtend[] | undefined;
+}
+
+export class MyBetMatchExtend implements IMyBetMatchExtend {
     matchId?: number;
-    homeTeam?: string | null;
-    home?: string | null;
-    awayTeam?: string | null;
-    away?: string | null;
+    homeTeam?: string | undefined;
+    home?: string | undefined;
+    awayTeam?: string | undefined;
+    away?: string | undefined;
     outcomeId?: number;
-    outcomeName?: string | null;
+    outcomeName?: string | undefined;
     matchResultId?: number;
-    matchResult?: string | null;
+    matchResult?: string | undefined;
+
+    constructor(data?: IMyBetMatchExtend) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchId = _data["matchId"];
+            this.homeTeam = _data["homeTeam"];
+            this.home = _data["home"];
+            this.awayTeam = _data["awayTeam"];
+            this.away = _data["away"];
+            this.outcomeId = _data["outcomeId"];
+            this.outcomeName = _data["outcomeName"];
+            this.matchResultId = _data["matchResultId"];
+            this.matchResult = _data["matchResult"];
+        }
+    }
+
+    static fromJS(data: any): MyBetMatchExtend {
+        data = typeof data === 'object' ? data : {};
+        let result = new MyBetMatchExtend();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchId"] = this.matchId;
+        data["homeTeam"] = this.homeTeam;
+        data["home"] = this.home;
+        data["awayTeam"] = this.awayTeam;
+        data["away"] = this.away;
+        data["outcomeId"] = this.outcomeId;
+        data["outcomeName"] = this.outcomeName;
+        data["matchResultId"] = this.matchResultId;
+        data["matchResult"] = this.matchResult;
+        return data;
+    }
 }
 
-export interface MyBets {
+export interface IMyBetMatchExtend {
+    matchId?: number;
+    homeTeam?: string | undefined;
+    home?: string | undefined;
+    awayTeam?: string | undefined;
+    away?: string | undefined;
+    outcomeId?: number;
+    outcomeName?: string | undefined;
+    matchResultId?: number;
+    matchResult?: string | undefined;
+}
+
+export class MyBets implements IMyBets {
     betCardId?: number;
     matchSelectionId?: number;
     matchTypeId?: number;
-    matchSelection?: string | null;
-    matchType?: string | null;
+    matchSelection?: string | undefined;
+    matchType?: string | undefined;
+
+    constructor(data?: IMyBets) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.betCardId = _data["betCardId"];
+            this.matchSelectionId = _data["matchSelectionId"];
+            this.matchTypeId = _data["matchTypeId"];
+            this.matchSelection = _data["matchSelection"];
+            this.matchType = _data["matchType"];
+        }
+    }
+
+    static fromJS(data: any): MyBets {
+        data = typeof data === 'object' ? data : {};
+        let result = new MyBets();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["betCardId"] = this.betCardId;
+        data["matchSelectionId"] = this.matchSelectionId;
+        data["matchTypeId"] = this.matchTypeId;
+        data["matchSelection"] = this.matchSelection;
+        data["matchType"] = this.matchType;
+        return data;
+    }
 }
 
-export interface SelectionMatchResponse {
+export interface IMyBets {
+    betCardId?: number;
+    matchSelectionId?: number;
+    matchTypeId?: number;
+    matchSelection?: string | undefined;
+    matchType?: string | undefined;
+}
+
+export class SelectionMatchResponse implements ISelectionMatchResponse {
     matchSelectionId?: number;
     matchId?: number;
     homeId?: number;
-    home?: string | null;
-    homeTeam?: string | null;
+    home?: string | undefined;
+    homeTeam?: string | undefined;
     awayId?: number;
-    awayTeam?: string | null;
-    away?: string | null;
+    awayTeam?: string | undefined;
+    away?: string | undefined;
+    matchDate?: Date;
+
+    constructor(data?: ISelectionMatchResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchSelectionId = _data["matchSelectionId"];
+            this.matchId = _data["matchId"];
+            this.homeId = _data["homeId"];
+            this.home = _data["home"];
+            this.homeTeam = _data["homeTeam"];
+            this.awayId = _data["awayId"];
+            this.awayTeam = _data["awayTeam"];
+            this.away = _data["away"];
+            this.matchDate = _data["matchDate"] ? new Date(_data["matchDate"].toString()) : <any>undefined;
+        }
+    }
+
+    static fromJS(data: any): SelectionMatchResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new SelectionMatchResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchSelectionId"] = this.matchSelectionId;
+        data["matchId"] = this.matchId;
+        data["homeId"] = this.homeId;
+        data["home"] = this.home;
+        data["homeTeam"] = this.homeTeam;
+        data["awayId"] = this.awayId;
+        data["awayTeam"] = this.awayTeam;
+        data["away"] = this.away;
+        data["matchDate"] = this.matchDate ? this.matchDate.toISOString() : <any>undefined;
+        return data;
+    }
+}
+
+export interface ISelectionMatchResponse {
+    matchSelectionId?: number;
+    matchId?: number;
+    homeId?: number;
+    home?: string | undefined;
+    homeTeam?: string | undefined;
+    awayId?: number;
+    awayTeam?: string | undefined;
+    away?: string | undefined;
     matchDate?: Date;
 }
 
-export interface TeamResponse {
+export class TeamResponse implements ITeamResponse {
     id?: number;
-    name?: string | null;
-    shortName?: string | null;
+    name?: string | undefined;
+    shortName?: string | undefined;
+
+    constructor(data?: ITeamResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.name = _data["name"];
+            this.shortName = _data["shortName"];
+        }
+    }
+
+    static fromJS(data: any): TeamResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new TeamResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["name"] = this.name;
+        data["shortName"] = this.shortName;
+        return data;
+    }
 }
 
-export interface UpdateBetResult {
-    message?: string | null;
+export interface ITeamResponse {
+    id?: number;
+    name?: string | undefined;
+    shortName?: string | undefined;
 }
 
-export interface UpdateBetResultRequest {
-    matchSelectionId?: number;
+export class UpdateBetResult implements IUpdateBetResult {
+    message?: string | undefined;
+
+    constructor(data?: IUpdateBetResult) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.message = _data["message"];
+        }
+    }
+
+    static fromJS(data: any): UpdateBetResult {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateBetResult();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["message"] = this.message;
+        return data;
+    }
+}
+
+export interface IUpdateBetResult {
+    message?: string | undefined;
+}
+
+export class UpdateBetResultRequest implements IUpdateBetResultRequest {
+    matchId?: number;
+    outcomeId?: number;
+
+    constructor(data?: IUpdateBetResultRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchId = _data["matchId"];
+            this.outcomeId = _data["outcomeId"];
+        }
+    }
+
+    static fromJS(data: any): UpdateBetResultRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateBetResultRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchId"] = this.matchId;
+        data["outcomeId"] = this.outcomeId;
+        return data;
+    }
+}
+
+export interface IUpdateBetResultRequest {
     matchId?: number;
     outcomeId?: number;
 }
 
-export interface UpdateUserRequest {
+export class UpdateUserRequest implements IUpdateUserRequest {
     id?: number;
-    username?: string | null;
-    password?: string | null;
-    firstName?: string | null;
-    middleName?: string | null;
-    lastName?: string | null;
-    phoneNumber?: string | null;
-    email?: string | null;
+    username?: string | undefined;
+    password?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    phoneNumber?: string | undefined;
+    email?: string | undefined;
+
+    constructor(data?: IUpdateUserRequest) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.username = _data["username"];
+            this.password = _data["password"];
+            this.firstName = _data["firstName"];
+            this.middleName = _data["middleName"];
+            this.lastName = _data["lastName"];
+            this.phoneNumber = _data["phoneNumber"];
+            this.email = _data["email"];
+        }
+    }
+
+    static fromJS(data: any): UpdateUserRequest {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateUserRequest();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["username"] = this.username;
+        data["password"] = this.password;
+        data["firstName"] = this.firstName;
+        data["middleName"] = this.middleName;
+        data["lastName"] = this.lastName;
+        data["phoneNumber"] = this.phoneNumber;
+        data["email"] = this.email;
+        return data;
+    }
 }
 
-export interface UpdateUserResponse {
+export interface IUpdateUserRequest {
     id?: number;
-    statusName?: string | null;
+    username?: string | undefined;
+    password?: string | undefined;
+    firstName?: string | undefined;
+    middleName?: string | undefined;
+    lastName?: string | undefined;
+    phoneNumber?: string | undefined;
+    email?: string | undefined;
+}
+
+export class UpdateUserResponse implements IUpdateUserResponse {
+    id?: number;
+    statusName?: string | undefined;
+
+    constructor(data?: IUpdateUserResponse) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.id = _data["id"];
+            this.statusName = _data["statusName"];
+        }
+    }
+
+    static fromJS(data: any): UpdateUserResponse {
+        data = typeof data === 'object' ? data : {};
+        let result = new UpdateUserResponse();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["id"] = this.id;
+        data["statusName"] = this.statusName;
+        return data;
+    }
+}
+
+export interface IUpdateUserResponse {
+    id?: number;
+    statusName?: string | undefined;
 }
 
 export class ApiException extends Error {
@@ -1437,7 +2768,10 @@ export class ApiException extends Error {
 }
 
 function throwException(message: string, status: number, response: string, headers: { [key: string]: any; }, result?: any): any {
-    throw new ApiException(message, status, response, headers, result);
+    if (result !== null && result !== undefined)
+        throw result;
+    else
+        throw new ApiException(message, status, response, headers, null);
 }
 
 function isAxiosError(obj: any): obj is AxiosError {
