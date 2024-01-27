@@ -533,11 +533,11 @@ paths:
       security:
       - bearer:
         - Bearer
-  /Bet/update-bet-result/{matchtypeId}/{matchSelectionId}:
+  /Bet/update-match-results/{matchtypeId}/{matchSelectionId}:
     put:
       tags:
       - Bet
-      operationId: update-bet-result
+      operationId: update-match-results
       parameters:
       - name: matchtypeId
         in: path
@@ -587,6 +587,93 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/UpdateBetResult'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/update-match-result/{matchtypeId}/{matchSelectionId}:
+    put:
+      tags:
+      - Bet
+      operationId: update-match-result
+      parameters:
+      - name: matchtypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: matchSelectionId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBetResultRequest'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/UpdateBetResultRequest'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/UpdateBetResultRequest'
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/UpdateBetResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateBetResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/UpdateBetResult'
+        401:
+          description: Unauthorized
+        403:
+          description: Forbidden
+      security:
+      - bearer:
+        - Bearer
+  /Bet/get-match-results/{matchtypeId}/{matchSelectionId}:
+    get:
+      tags:
+      - Bet
+      operationId: get-match-results
+      parameters:
+      - name: matchtypeId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: matchSelectionId
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        200:
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetMatchResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMatchResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetMatchResult'
         401:
           description: Unauthorized
         403:
@@ -882,6 +969,21 @@ components:
           nullable: true
         isEnabled:
           type: boolean
+    GetMatchResult:
+      type: object
+      additionalProperties: false
+      properties:
+        matchTypeId:
+          type: integer
+          format: int32
+        matchSelectionId:
+          type: integer
+          format: int32
+        matches:
+          type: array
+          nullable: true
+          items:
+            $ref: '#/components/schemas/MatchResult'
     GetMatchTypes:
       type: object
       additionalProperties: false
@@ -943,6 +1045,16 @@ components:
         matchResult:
           type: string
           nullable: true
+    MatchResult:
+      type: object
+      additionalProperties: false
+      properties:
+        matchId:
+          type: integer
+          format: int32
+        outcomeId:
+          type: integer
+          format: int32
     MyBet:
       type: object
       additionalProperties: false

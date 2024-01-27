@@ -1,4 +1,5 @@
 
+using System.Runtime.InteropServices;
 using ErrorOr;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
@@ -25,18 +26,22 @@ public class UpdateBetResultCommandHandler : IRequestHandler<UpdateBetResultComm
                                     && b.MatchTypeId == request.MatchTypeId)
                                 .FirstOrDefaultAsync(cancellationToken);
 
+        var result = await _context.Outcomes
+                                    .Where(o => o.OutcomeId == request.OutcomeId)
+                                    .FirstOrDefaultAsync(cancellationToken);
         if (betResult == null)
         {
             return Error.NotFound("THE_BET_NOT_FOUND", "The bet was not found");
         }
 
         betResult.Outcome = request.OutcomeId;
+        betResult.ResultDate = DateTime.UtcNow;
         _context.BetResults.Update(betResult);
         return await _context.SaveChangesAsync(cancellationToken)
             .ContinueWith(t =>
                 t.Result == 0
                     ? Error.Failure("No rows affected")
-                    : ErrorOr.ErrorOr.From(new UpdateBetResult("Bet result updated"))
+                    : ErrorOr.ErrorOr.From(new UpdateBetResult($"Match result updated for matchId {betResult.MatchTypeId} result {result!.Name}"))
             );
     }
 }

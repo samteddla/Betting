@@ -1,4 +1,6 @@
 <template>
+    <v-alert v-if="store.match" v-model="alertVisible" variant="outlined" type="success" :title="store.match.description"
+        :text="alertVisibleMessage"></v-alert>
     <v-sheet elevation="12" rounded="lg" width="100%" class="pa-4 mx-auto">
         <v-container v-if="store.match" style="max-width: 600px; width: 100%;">
             <v-row>
@@ -53,7 +55,7 @@
                         <td>
                             <v-row>
                                 <v-col v-for="c in outcomes" :key="c.outcomeId">
-                                    <v-checkbox v-model="selectedChoices" label=""
+                                    <v-checkbox v-model="store.playOutcome" label=""
                                         :value="{ matchId: match.matchId, outcomeId: c.outcomeId }">
                                     </v-checkbox>
                                 </v-col>
@@ -61,23 +63,35 @@
                         </td>
                     </tr>
                 </tbody>
-            </table>                    
+            </table>
             <div class="pa-2"></div>
-            <v-btn block class="text-none mb-4" color="indigo-darken-3"
-                size="x-large" variant="flat" @click="submitMatch">Update Result</v-btn>
+            <v-btn block class="text-none mb-4" color="indigo-darken-3" size="x-large" variant="flat"
+                @click="submitMatch">Update Result</v-btn>
 
             <v-btn block class="text-none" color="grey-lighten-3" size="x-large" variant="flat" @click="clearSelection">
                 clear selections
-            </v-btn>            
+            </v-btn>
         </v-container>
     </v-sheet>
     <v-container v-if="store.match">
-        <v-col>
-            <div>{{ matchtypeId }}</div>
-            <div>selectedChoices (!) :
-                <pre>{{ selectedChoices }}</pre>
-            </div>        
-        </v-col>
+        <v-row>
+            <v-col>
+                <div>matchResult:
+                    <pre>{{ store.matchResult }}</pre>
+                </div>
+            </v-col>
+            <v-col>
+                <div>{{ matchtypeId }}</div>
+                <div>selectedChoices (!) :
+                    <pre>{{ selectedChoices }}</pre>
+                </div>
+            </v-col>
+            <v-col>
+                <div>playOutcome:
+                    <pre>{{ store.playOutcome }}</pre>
+                </div>
+            </v-col>
+        </v-row>
     </v-container>
 </template>
 
@@ -86,26 +100,46 @@
 import { useRoute } from 'vue-router'
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { MatchStore } from '@/store';
-import { type UpdateBetResultRequest } from '@/api/api2';
 const store = MatchStore();
-const outcomes = ref([{ "outcomeId": 1, "name": "H" }, { "outcomeId": 4, "name": "A" }, { "outcomeId": 2, "name": "D" }]);
+const outcomes = ref([
+    {
+        "outcomeId": 1,
+        "name": "H"
+    },
+    {
+        "outcomeId": 2,
+        "name": "A"
+    },
+    {
+        "outcomeId": 4,
+        "name": "D"
+    }]);
 const matchtypeId = ref(1);
 const selectedChoices = ref([]);
 const route = useRoute()
 const routeId = ref('0');
 const result = ref([]);
+const alertVisible = ref(false);
+const alertVisibleMessage = ref('');
 
 // fetch the user information when params change
 watch(() => route.params.id,
-    async id  => {
-        getMatch();
+    async id => {
+        getMatchResult(1, route.params.id.toString());
         routeId.value = id.toString();
+    }
+)
+
+// watch matchtypeId
+watch(() => matchtypeId.value,
+    async matchtypesId => {
+        getMatchResult(matchtypesId, route.params.id.toString());
     }
 )
 
 onMounted(() => {
     console.log('mounted: ', route.params.id.toString());
-    getMatch();
+    getMatchResult(1, route.params.id.toString());
 });
 
 const clearSelection = () => {
@@ -113,8 +147,8 @@ const clearSelection = () => {
     result.value = [];
 }
 
-const getMatch = async () => {
-    await store.getMatch(parseInt(route.params.id.toString()));
+const getMatchResult = async (matchtypeId: number, matchSelectionId: string) => {
+    await store.getMatchResults(matchtypeId, parseInt(matchSelectionId.toString()));
     selectedChoices.value = [];
 }
 
@@ -123,22 +157,22 @@ onUnmounted(() => {
 });
 
 const submitMatch = async () => {
-    
     var responses = {
         "matchSelectionId": store.match?.matchSelectionId,
         "matchtypeId": matchtypeId.value,
-        "UpdateBetResultRequest": selectedChoices.value.map((c: any) => {
-        return {                      
-            "matchId": c.matchId,
-            "outcomeId": c.outcomeId
-        }
-       })
+        "UpdateBetResultRequest": store.playOutcome.map((c: any) => {
+            return {
+                "matchId": c.matchId,
+                "outcomeId": c.outcomeId
+            }
+        })
     };
 
     console.log(responses);
-    
-    var resp = await store.updateBetResult(responses);
-
+    await store.updateMatchResult(responses);
+    alertVisible.value = true;
+    alertVisibleMessage.value = store.updatedBetResult?.map((c: any) => c.message + '\n\r');
     console.log(store.updatedBetResult);
+    setTimeout(() => (alertVisible.value = false), 5000);
 }
 </script>

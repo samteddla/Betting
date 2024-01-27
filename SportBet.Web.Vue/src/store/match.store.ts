@@ -4,7 +4,7 @@ import { AxiosClient } from "@/services";
 import { useAlertStore } from "@/store";
 import { Client } from '@/api/api2'
 
-import {type MyBetExtende, type GetActiveMatchs, type GetActiveMatch, type BetOnGame, type GetActivBetsResponse, type BetResultResponse,
+import {type GetMatchResult, type MyBetExtende, type GetActiveMatchs, type GetActiveMatch, type BetOnGame, type GetActivBetsResponse, type BetResultResponse,
 type MyBet, type UpdateBetResult } from "@/api/api2";
 
 export const MatchStore = defineStore("match", () => {
@@ -19,12 +19,26 @@ export const MatchStore = defineStore("match", () => {
     const playedCard = ref<MyBet[]>()
     const playOutcome = ref<{ matchId: number; outcomeId: number }[]>([]);  
     const updatedBetResult = ref<UpdateBetResult[]>();
+    const matchResult = ref<GetMatchResult>();
 
     const api = new Client(undefined, axiosClient);
     
-    const updateBetResult = async (betResult: any) => {
+    const getMatchResults = async (matchtypeId: number, selectionId : number) => {
+        await getMatch(selectionId);
+        matchResult.value = await api.getMatchResults(matchtypeId,selectionId).then((response) => {
+
+            var resultOutcome = (response.matches === null || response.matches === undefined)? null 
+            : response.matches.map((c : any) => {
+                return { matchId: c.matchId, outcomeId: c.outcomeId};
+            });
+
+            reversePlayOutcome(resultOutcome);
+            return response;
+        });
+    }
+    const updateMatchResult = async (betResult: any) => {
         betResult.UpdateBetResultRequest = createPlayOutCome(betResult.UpdateBetResultRequest);
-        updatedBetResult.value = await api.updateBetResult(betResult.matchtypeId,betResult.matchSelectionId,betResult.UpdateBetResultRequest).then((response) => {
+        updatedBetResult.value = await api.updateMatchResults(betResult.matchtypeId,betResult.matchSelectionId,betResult.UpdateBetResultRequest).then((response) => {
             return response;
         });
     }
@@ -158,5 +172,5 @@ export const MatchStore = defineStore("match", () => {
         return result;
     }
 
-    return {updatedBetResult, cardExtended, match, matchs,cards,card,playedCard,playOutcome,updateBetResult, getMatches, getMatch, betOn, getMyCards, getMyCardDetail, getPlayedCard, getMyCardExtende };
+    return {matchResult, updatedBetResult, cardExtended, match, matchs,cards,card,playedCard,playOutcome,getMatchResults,updateMatchResult, getMatches, getMatch, betOn, getMyCards, getMyCardDetail, getPlayedCard, getMyCardExtende };
 });

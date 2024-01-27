@@ -1,36 +1,11 @@
 <template>
+    <v-alert v-model="alertVisible" v-if="store.match" variant="outlined" type="success" :title="store.match.description"
+        :text="alertVisibleMessage"></v-alert>
     <v-sheet elevation="12" rounded="lg" width="100%" class="pa-4 mx-auto">
-        <v-fade-transition hide-on-leave>
-            <v-card v-if="dialog2" append-icon="$close" class="mx-auto" elevation="16" max-width="500"
-                title="Send a receipt">
-                <template v-slot:append>
-                    <v-btn icon="$close" variant="text" @click="dialog2 = false"></v-btn>
-                </template>
-
-                <v-divider></v-divider>
-
-                <div class="py-12 text-center">
-                    <v-icon class="mb-6" color="success" icon="mdi-check-circle-outline" size="128"></v-icon>
-
-                    <div class="text-h4 font-weight-bold">Betting card is ready!</div>
-                </div>
-
-                <v-divider></v-divider>
-
-                <div class="pa-4 text-end">
-                    <v-btn class="text-none" color="medium-emphasis" min-width="92" rounded variant="outlined"
-                        @click="showCards">
-                        Close
-                    </v-btn>
-                </div>
-            </v-card>
-        </v-fade-transition>
-
         <v-container v-if="store.match" style="max-width: 600px; width: 100%;">
             <v-row>
                 <v-col>
                     <v-card>
-
                         <v-card-title>
                             <v-icon icon="mdi-calendar" start></v-icon>{{ store.match.name }} ID {{
                                 store.match.matchSelectionId }}
@@ -56,7 +31,6 @@
                 <v-tab value="3" style="font-size: 10px;">Both</v-tab>
             </v-tabs>
         </v-container>
-
 
         <v-container fluid fill-width v-if="store.match" style="max-width: 600px; width: 100%;">
             <table class="left mx-auto">
@@ -97,18 +71,19 @@
                 </v-row>
             </v-sheet>
             <div class="pa-2"></div>
-            <v-btn v-if="canBuy" block class="text-none mb-4" color="indigo-darken-3"
-                size="x-large" variant="flat" @click="submitMatch">Buy now</v-btn>
+            <v-btn v-if="canBuy" block class="text-none mb-4" color="indigo-darken-3" size="x-large" variant="flat"
+                @click="submitMatch">Buy now</v-btn>
 
             <v-btn block class="text-none" color="grey-lighten-3" size="x-large" variant="flat" @click="clearSelection">
                 clear selections
             </v-btn>
-            <v-btn v-if="!isAuth" block class="text-none mb-4" color="indigo-darken-3" size="x-large" variant="flat" to="/login" >
+            <v-btn v-if="!isAuth" block class="text-none mb-4" color="indigo-darken-3" size="x-large" variant="flat"
+                to="/login">
                 Login and Buy
             </v-btn>
         </v-container>
     </v-sheet>
-    <v-container v-if="store.match">
+    <v-container v-if="show">
         <v-col>
             <div>{{ selectionId }}</div>
             <div>selectedChoices :
@@ -119,41 +94,46 @@
         </v-col>
     </v-container>
 
-    <v-footer
-      v-if="canBuy" 
-      app
-      name="footer"
-    >
-    <v-row>
-                    <v-col>
-                        <div>Costs: {{ costs }}</div>
-                    </v-col>
-                    <v-col>
-                        <v-btn v-if="canBuy" block class="text-none mb-4" color="indigo-darken-3"
-                 variant="flat" @click="submitMatch">Buy</v-btn>
+    <v-footer v-if="canBuy" app name="footer">
+        <v-row>
+            <v-col>
+                <div>Costs: {{ costs }}</div>
+            </v-col>
+            <v-col>
+                <v-btn v-if="canBuy" block class="text-none mb-4" color="indigo-darken-3" variant="flat"
+                    @click="submitMatch">Buy</v-btn>
 
-                    </v-col>
-                </v-row>
+            </v-col>
+        </v-row>
 
     </v-footer>
 </template>
 
 <script lang="ts" setup>
-
 import { useRoute } from 'vue-router'
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { MatchStore, AuthStore } from '@/store';
 import router from '@/router';
-import { is } from '@babel/types';
 
+const show = ref(true);
 const costs = ref(0);
 const canBuy = ref(false);
 const halfandFullTime = ref(1);
-const dialog2 = ref(false);
 const store = MatchStore();
 const auth = AuthStore();
-const outcomes = ref([{ "outcomeId": 1, "name": "H" }, { "outcomeId": 4, "name": "A" }, { "outcomeId": 2, "name": "D" }]);
-
+const outcomes = ref([
+    {
+        "outcomeId": 1,
+        "name": "H"
+    },
+    {
+        "outcomeId": 2,
+        "name": "A"
+    },
+    {
+        "outcomeId": 4,
+        "name": "D"
+    }]);
 const isAuth = ref(false)
 const selectionId = ref(1);
 const selectedChoices = ref([]);
@@ -161,6 +141,8 @@ const route = useRoute()
 const routeId = ref('0');
 const result = ref([]);
 const reversedArray = ref([]);
+const alertVisible = ref(false);
+const alertVisibleMessage = ref('');
 // fetch the user information when params change
 watch(() => route.params.id,
     async id => {
@@ -199,7 +181,7 @@ watch([selectedChoices, selectionId], (val: any) => {
         testMe();
     }
     isAuth.value = auth.user !== null;
-    if(!isAuth.value){
+    if (!isAuth.value) {
         canBuy.value = false;
     }
 
@@ -208,7 +190,6 @@ watch([selectedChoices, selectionId], (val: any) => {
 onMounted(() => {
     console.log('mounted: ', route.params.id.toString());
     getMatch();
-    // routeId.value = route.params.id.toString();
 });
 
 const clearSelection = () => {
@@ -225,8 +206,6 @@ const getMatch = async () => {
 
 onUnmounted(() => {
     console.log('unmounted');
-    //MatchStore();
-    //selectedChoices.value = [];
 });
 
 const submitMatch = async () => {
@@ -243,11 +222,19 @@ const submitMatch = async () => {
     };
 
     console.log(responses);
-    
+
     var resp = await store.betOn(responses);
     console.log(resp);
     if (resp) {
         if (resp.isSaved) {
+            alertVisible.value = true;
+            alertVisibleMessage.value = 'Your bet is saved!';
+            setTimeout(() => (alertVisible.value = false), 5000);
+            clearSelection();
+        } else {
+            alertVisible.value = true;
+            alertVisibleMessage.value = 'Your bet is not saved!';
+            setTimeout(() => (alertVisible.value = false), 5000);
         }
     }
 }
@@ -257,7 +244,7 @@ const showCards = () => {
 }
 
 const testMe = () => {
-   
+
     // Web match list to db!
     const inputArray = selectedChoices.value.map((c: any) => {
         return {
@@ -286,7 +273,7 @@ const testMe = () => {
     // db match list to web
     const originalOutcomes = [1, 2, 4, 5, 3, 6, 7]
     const combinedOutcomes = [[1], [2], [4], [1, 4], [1, 2], [2, 4], [1, 2, 4]];
-    
+
     reversedArray.value = [];
     for (const item of result.value) {
         const matchId = item.matchId;
@@ -296,7 +283,7 @@ const testMe = () => {
         const index = originalOutcomes.indexOf(originalOutcomeId);
         if (index !== -1) {
             const lists = combinedOutcomes[index];
-           
+
             for (let i = 0; i < lists.length; i++) {
                 const outcomeId = lists[i];
                 reversedArray.value.push({ matchId, outcomeId });

@@ -30,27 +30,32 @@ Content-Type: application/json
 GET {{HostAddress}}/Bet/get-cards
 Accept: application/json
 Authorization: Bearer {{Token}}
-###
+### 
 POST {{HostAddress}}/Bet/create-match-selection HTTP/1.1
 Accept: application/json
 Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-  "name": "Sunday Game 1",
-  "description": "Sunday Week 2",
-  "activeUntil": "2024-01-24T21:58:04.970Z",
+  "name": "Game ON!",
+  "description": "Week 3",
+  "activeUntil": "2024-02-24T21:58:04.970Z",
   "matches": [
-    5,6,7,8,9
+    9,8
   ],
   "matchesTypes": [
     1,2,3
   ]
 }
-####
+######
+POST {{HostAddress}}/Bet/create-match-selection HTTP/1.1
+Accept: application/json
+Authorization: Bearer {{Token}}
+Content-Type: application/json
+
 {
-  "name": "Saturday Game 1",
-  "description": "Saturday Week 2",
+  "name": "Firday Game 3",
+  "description": "Firday Week 3",
   "activeUntil": "2024-01-23T21:58:04.970Z",
   "matches": [
     1,2,3,4

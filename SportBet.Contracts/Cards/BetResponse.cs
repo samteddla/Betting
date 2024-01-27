@@ -22,4 +22,6 @@ public record GetOutcomes(int Id, int OutcomeId, string Name, bool IsEnabled);
 public record UpdateBetResult(string Message);
 public record UpdateBetResultRequest(int MatchId, int OutcomeId);
 public record MatchRequest(int MatchId, int OutcomeId);
+public record GetMatchResult(int MatchTypeId, int MatchSelectionId, List<MatchResult> Matches);
+public record MatchResult(int MatchId, int OutcomeId);
 

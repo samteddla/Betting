@@ -64,22 +64,6 @@
 	"git.openRepositoryInParentFolders": "never",
 	"editor.minimap.enabled": false,
 	"typescript.updateImportsOnFileMove.enabled": "always",
-	"mssql.connections": [
-		{
-			"connectionString": "Server=localhost\\SQLEXPRESS;Database=master;Trusted_Connection=True;; Encrypt=true; Trust Server Certificate=true;",
-			"profileName": "Express",
-			"encrypt": "Mandatory",
-			"trustServerCertificate": true,
-			"server": "localhost\\SQLEXPRESS",
-			"database": "master",
-			"user": "",
-			"password": "",
-			"connectTimeout": 15,
-			"commandTimeout": 30,
-			"applicationName": "vscode-mssql",
-			"authenticationType": "Integrated"
-		}
-	],
 	"workbench.preferredDarkColorTheme": "GitHub Light",
 	"terminal.integrated.tabs.defaultColor": "terminal.ansiGreen",
 	"editor.codeActionsOnSave": {

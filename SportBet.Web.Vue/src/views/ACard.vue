@@ -34,18 +34,15 @@
                     </tr>
                 </thead>
                 <tbody style="font-size: smaller;">
-                    <tr v-for="match in store.cardExtended.matches" :key="match.matchId" >
+                    <tr v-for="match in store.cardExtended.matches" :key="match.matchId">
                         <td>{{ match.homeTeam }}</td>
-                        <td>{{ match.awayTeam }} {{ match.matchResultId}}</td>
+                        <td>{{ match.awayTeam }} {{ match.matchResultId }}</td>
                         <td>
                             <v-row class="small">
                                 <v-col v-for="c in outcomes" :key="c.outcomeId">
-                                    <v-checkbox v-model="store.playOutcome" 
-                                        :class="match.matchResultId == c.outcomeId ? match.matchResult : ''"
-                                        label="" 
-                                        disabled
-                                        hide-details                                     
-                                        :value="{ matchId: match.matchId, outcomeId: c.outcomeId }">
+                                    <v-checkbox v-model="store.playOutcome"
+                                        :class="aWin(match.matchResultId, c.outcomeId) ? match.matchResult : ''" label=""
+                                        disabled hide-details :value="{ matchId: match.matchId, outcomeId: c.outcomeId }">
                                     </v-checkbox>
                                 </v-col>
                             </v-row>
@@ -55,13 +52,14 @@
             </table>
             <v-card>
                 <v-card-title>
-                    <v-icon icon="mdi-star" start></v-icon> CardId: {{ store.cardExtended.betCardId }} 
+                    <v-icon icon="mdi-star" start></v-icon> CardId: {{ store.cardExtended.betCardId }}
                 </v-card-title>
                 <v-card-text>
                     <v-row>
                         <v-col>
-                            <div> Bet :{{ store.cardExtended.betAmount }} Win: {{ store.cardExtended.wonAmount }} total WinCount : {{
-                        store.cardExtended.totalWinCount }}</div>
+                            <div> Bet :{{ store.cardExtended.betAmount }} Win: {{ store.cardExtended.wonAmount }} total
+                                WinCount : {{
+                                    store.cardExtended.totalWinCount }}</div>
                         </v-col>
                     </v-row>
                 </v-card-text>
@@ -70,18 +68,21 @@
     </v-sheet>
 
     <v-container v-if="show">
-        <div>
-            .cardExtended:
-            <pre>{{ store.cardExtended }}</pre>
-        </div>
-        <div>
-            playedCard:
-            <pre>{{ store.playedCard }}</pre>
-        </div>
-        <div>
-            playOutcome :
-            {{ store.playOutcome }}
-        </div>
+        <v-row>
+            <v-col>
+                cardExtended:
+                <pre>{{ store.cardExtended?.matches }}</pre>
+            </v-col>
+            <v-col>
+                playedCard:
+                <pre>{{ store.playedCard }}</pre>
+            </v-col>
+            <v-col>
+                playOutcome :
+                <pre>{{ store.playOutcome }}</pre>
+            </v-col>
+        </v-row>
+
     </v-container>
 </template>
 
@@ -92,19 +93,19 @@ import { MatchStore } from '@/store';
 
 const store = MatchStore();
 const route = useRoute()
-const show = ref(false);
+const show = ref(true);
 const outcomes = ref([
     {
         "outcomeId": 1,
         "name": "H"
     },
     {
-        "outcomeId": 4,
-        "name": "D"
-    },
-    {
         "outcomeId": 2,
         "name": "A"
+    },
+    {
+        "outcomeId": 4,
+        "name": "D"
     }]);
 
 
@@ -125,6 +126,32 @@ onMounted(() => {
         console.log('mountd.cardId : ', store.cardExtended.betCardId);
     }
 })
+
+const aWin = (matchResultId: number, outcomeId: number) => {
+    let originalOutcomes = [1, 2, 4, 5, 3, 6, 7];
+    let combinedOutcomes = [[1],[2],[4],[1, 4],[1, 2],[2, 4],[1, 2, 4]];
+
+    let dictionary = originalOutcomes.reduce((acc: any, k: number , i: number) => {
+        acc[k] = combinedOutcomes[i];
+        return acc;
+    }, {});
+
+    let bothOutcomes = [5, 3, 6, 7];
+
+    if (outcomeId === matchResultId) {
+        return true;
+    } else {
+        let r = (dictionary as { [key: number]: number[] })[matchResultId] || [];
+        let o = (dictionary as { [key: number]: number[] })[outcomeId] || [];
+
+        let matchResultIds = bothOutcomes.includes(matchResultId) ? r : [matchResultId];
+        let outcomeIds = bothOutcomes.includes(outcomeId) ? o : [outcomeId];
+
+        let win = matchResultIds.filter(id => outcomeIds.includes(id)).length === 1;
+        return win;
+    }
+}
+
 </script>
 
 <style scoped>
@@ -139,6 +166,7 @@ onMounted(() => {
 .NotPlayed {
     color: rgb(50, 60, 105);
 }
+
 .small {
     font-size: smaller;
 }

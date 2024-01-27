@@ -32,6 +32,9 @@ public class UpdateBetResultsCommandHandler : IRequestHandler<UpdateBetResultsCo
             return Error.NotFound("THE_BET_NOT_FOUND", "The bet was not found");
         }
 
+        var result = await _context.Outcomes
+                                    .ToListAsync(cancellationToken);
+
         foreach (var betResult in betResults)
         {
             var updateBetResultRequest = request.UpdateBetResultRequests.FirstOrDefault(x => x.MatchId == betResult.MatchId);
@@ -47,7 +50,7 @@ public class UpdateBetResultsCommandHandler : IRequestHandler<UpdateBetResultsCo
             .ContinueWith(t =>
                 t.Result == 0
                     ? Error.Failure("No rows affected")
-                    : ErrorOr.ErrorOr.From(request.UpdateBetResultRequests.Select(x => new UpdateBetResult($"Bet result updated for match {x.MatchId} with outcome {x.OutcomeId}")))
+                    : ErrorOr.ErrorOr.From(request.UpdateBetResultRequests.Select(x => new UpdateBetResult($"Bet result updated for match {x.MatchId} outcome {result!.FirstOrDefault(y => y.OutcomeId == x.OutcomeId)?.Name}")))
             );
     }
 }

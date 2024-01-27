@@ -11,6 +11,7 @@ public class BetResultConfiguration : IEntityTypeConfiguration<BetResult>
                 entity.ToTable("BetResult");
                 entity.HasKey(e => e.BetResultId).HasName("PK_BetResult");
                 entity.Property(e => e.Outcome).IsRequired();
+                // entity.Property(e => e.ResultDate).HasColumnType("datetime");
                 entity.HasIndex(e => e.MatchId, "IX_BetResult_MatchId");
                 entity.HasIndex(e => e.MatchTypeId, "IX_BetResult_MatchType");
                 entity.HasIndex(e => e.MatchSelectionId, "IX_BetResult_MatchSelectionId");

@@ -39,50 +39,62 @@ public class CreateMatchSelectionsCommandHandler :
             IsEnabled = true
         };
 
-        await _context.MatchSelections.AddAsync(matchSelection, cancellationToken);
-        var ok = await _context.SaveChangesAsync(cancellationToken);
-        if (ok == 0)
+        try
+        {
+
+            await _context.MatchSelections.AddAsync(matchSelection, cancellationToken);
+            var ok = await _context.SaveChangesAsync(cancellationToken);
+            if (ok == 0)
+            {
+                transaction.Rollback();
+                return Error.Conflict(code: "MATCH_SELECTION_ALREADY_EXISTS", description: "Match selection already exists");
+            }
+
+            // 2. add match selection to matchs
+            var matchSelectionMatchs = request.Matches.Select(match => new MatchSelectionMatch
+            {
+                Selection = matchSelection,
+                MatchId = match
+            });
+
+            await _context.MatchSelectionMatches.AddRangeAsync(matchSelectionMatchs, cancellationToken);
+            ok = await _context.SaveChangesAsync(cancellationToken);
+            if (ok == 0)
+            {
+                transaction.Rollback();
+                return Error.Conflict(code: "MATCH_SELECTION_ALREADY_EXISTS", description: "Match selection already exists");
+            }
+
+            // 3. add betresults to match selection
+            var bestResultsWithMachType = betMatchTypes.SelectMany(matchType => matchSelectionMatchs.Select(match => new BetResult
+            {
+                MatchId = match.MatchId,
+                MatchSelectionId = matchSelection.MatchSelectionId,
+                Outcome = 0,
+                MatchTypeId = matchType.MatchTypeId
+            }));
+
+            // Save all the above (1-3)
+            await _context.BetResults.AddRangeAsync(bestResultsWithMachType, cancellationToken);
+            ok = await _context.SaveChangesAsync(cancellationToken);
+
+            if (ok == 0)
+            {
+                transaction.Rollback();
+                return Error.Conflict(code: "MATCH_SELECTION_ALREADY_EXISTS", description: "Match selection already exists");
+            }
+
+        }
+        catch (Exception ex)
         {
             transaction.Rollback();
-            return Error.Conflict(code: "MATCH_SELECTION_ALREADY_EXISTS", description: "Match selection already exists");
+            throw;
         }
-
-        // 2. add match selection to matchs
-        var matchSelectionMatchs = request.Matches.Select(match => new MatchSelectionMatch
+        finally
         {
-            Selection = matchSelection,
-            MatchId = match
-        });
-
-        await _context.MatchSelectionMatches.AddRangeAsync(matchSelectionMatchs, cancellationToken);
-        ok = await _context.SaveChangesAsync(cancellationToken);
-        if (ok == 0)
-        {
-            transaction.Rollback();
-            return Error.Conflict(code: "MATCH_SELECTION_ALREADY_EXISTS", description: "Match selection already exists");
+            transaction.Commit();
+            transaction.Dispose();
         }
-
-        // 3. add betresults to match selection
-        var bestResultsWithMachType = betMatchTypes.SelectMany(matchType => matchSelectionMatchs.Select(match => new BetResult
-        {
-            MatchId = match.MatchId,
-            MatchSelectionId = matchSelection.MatchSelectionId,
-            Outcome = 0,
-            MatchTypeId = matchType.MatchTypeId,
-
-        }));
-
-        // Save all the above (1-3)
-        await _context.BetResults.AddRangeAsync(bestResultsWithMachType, cancellationToken);
-        ok = await _context.SaveChangesAsync(cancellationToken);
-
-        if (ok == 0)
-        {
-            transaction.Rollback();
-            return Error.Conflict(code: "MATCH_SELECTION_ALREADY_EXISTS", description: "Match selection already exists");
-        }
-
-        transaction.Commit();
 
         return ErrorOr.ErrorOr.From(new CreateMatchSelectionsResponse(
                                                                         MatchSelectionId: matchSelection.MatchSelectionId,

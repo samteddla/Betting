@@ -1,40 +1,40 @@
 <template>
-        <v-table style="max-width: 600px; width: 100%;" class="left mx-auto">
-            <thead>
-                <tr>
-                    <th class="text-left">
-                        Name
-                    </th>
-                    <th class="text-left">
-                        Description
-                    </th>
-                    <th class="text-left">
-                        H
-                    </th>
-                    <th class="text-left">
-                        A
-                    </th>
-                    <th class="text-left">
-                        D
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="item in desserts" :key="item.name">
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.fat }}</td>
-                    <td>
-                        <v-checkbox multiple label="" color="red" value="red" hide-details></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox label="" color="blue" value="blue" hide-details></v-checkbox>
-                    </td>
-                    <td>
-                        <v-checkbox label="" color="green" value="green" hide-details></v-checkbox>
-                    </td>
-                </tr>
-            </tbody>
-        </v-table>
+    <v-table style="max-width: 600px; width: 100%;" class="left mx-auto">
+        <thead>
+            <tr>
+                <th class="text-left">
+                    Name
+                </th>
+                <th class="text-left">
+                    Description
+                </th>
+                <th class="text-left">
+                    H
+                </th>
+                <th class="text-left">
+                    A
+                </th>
+                <th class="text-left">
+                    D
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="item in desserts" :key="item.name">
+                <td>{{ item.name }}</td>
+                <td>{{ item.fat }}</td>
+                <td>
+                    <v-checkbox multiple label="" color="red" value="red" hide-details></v-checkbox>
+                </td>
+                <td>
+                    <v-checkbox label="" color="blue" value="blue" hide-details></v-checkbox>
+                </td>
+                <td>
+                    <v-checkbox label="" color="green" value="green" hide-details></v-checkbox>
+                </td>
+            </tr>
+        </tbody>
+    </v-table>
 
     <v-sheet elevation="12" max-width="600" rounded="lg" width="100%" class="pa-4 text-center mx-auto">
         <v-table>
@@ -161,6 +161,16 @@
             </v-btn>
         </div>
     </v-sheet>
+
+    <v-sheet center elevation="12" max-width="500" rounded="sm" width="100%" class="pa-4 text-center mx-auto">
+        <v-slide-group show-arrows>
+            <v-slide-group-item v-for="n in 3" :key="n" v-slot="{ isSelected, toggle }">
+                <v-btn class="ma-2" :color="isSelected ? 'primary' : undefined" @click="OptionButton(n, isSelected)">
+                    Options {{ n * 10 }}
+                </v-btn>
+            </v-slide-group-item>
+        </v-slide-group>
+    </v-sheet>
 </template>
 
 
@@ -175,6 +185,12 @@ watch(loading, (val: boolean) => {
 
     setTimeout(() => (loading.value = false), 2000);
 });
+
+const OptionButton = (id:number, selected: boolean) => {    
+    console.log('OptionButton');
+    console.log(id);
+    console.log(selected);
+};
 
 const login = () => {
     loading.value = !loading.value;

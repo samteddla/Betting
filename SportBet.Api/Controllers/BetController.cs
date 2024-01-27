@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportBet.Application.Cards;
@@ -14,6 +15,13 @@ namespace SportBet.Api;
 [Authorize]
 public class BetController : ApiController
 {
+    private readonly ILogger<BetController> _logger;
+
+    public BetController(ILogger<BetController> logger)
+    {
+        _logger = logger;
+    }
+
     // get cards
     [HttpGet("get-cards")]
     public async Task<ActionResult<IEnumerable<MyBets>>> GetBets()
@@ -41,7 +49,8 @@ public class BetController : ApiController
     public async Task<ActionResult<MyBetExtende>> GetBetExtended(int id)
     {
         var bet = await Sender.Send(new GetMyBetExtendeResultQuery(id));
-
+ 
+        _logger.LogInformation("GetBetExtended: {0}", JsonSerializer.Serialize(bet));
         return bet.Match(
            base.Ok,
            Problem);
@@ -160,8 +169,8 @@ public class BetController : ApiController
     }
 
     // update-bet-result/{matchtypeid}
-    [HttpPut("update-bet-result/{matchtypeId}/{matchSelectionId}")]
-    public async Task<ActionResult<IEnumerable<UpdateBetResult>>> UpdateBetResult(int matchtypeId,int matchSelectionId, IEnumerable<UpdateBetResultRequest> request)
+    [HttpPut("update-match-results/{matchtypeId}/{matchSelectionId}")]
+    public async Task<ActionResult<IEnumerable<UpdateBetResult>>> UpdateMatchResult(int matchtypeId,int matchSelectionId, IEnumerable<UpdateBetResultRequest> request)
     {
         var result = await Sender.Send(new UpdateBetResultsCommand(
             MatchTypeId : matchtypeId,
@@ -172,4 +181,32 @@ public class BetController : ApiController
             base.Ok,
             Problem);
     }
+
+    [HttpPut("update-match-result/{matchtypeId}/{matchSelectionId}")]
+    public async Task<ActionResult<UpdateBetResult>> UpdateMatchResults(int matchtypeId,int matchSelectionId, UpdateBetResultRequest request)
+    {
+        var result = await Sender.Send(new UpdateBetResultCommand(
+            MatchTypeId : matchtypeId,
+            MatchSelectionId : matchSelectionId,
+            MatchId : request.MatchId,
+            OutcomeId : request.OutcomeId));
+
+        return result.Match(
+            base.Ok,
+            Problem);
+    }
+
+    [HttpGet("get-match-results/{matchtypeId}/{matchSelectionId}")]
+    public async Task<ActionResult<GetMatchResult>> GetMatchResults(int matchtypeId,int matchSelectionId)
+    {
+        var result = await Sender.Send(new GetMatchResultsCommand(
+            MatchTypeId : matchtypeId,
+            MatchSelectionId : matchSelectionId));
+
+        return result.Match(
+            base.Ok,
+            Problem);
+    }
 }
+
+

@@ -1,5 +1,6 @@
 using ErrorOr;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.EntityFrameworkCore;
 using SportBet.Application.Authentication.User;
 using SportBet.Contracts.Cards;
@@ -22,19 +23,6 @@ public class GetBetResultQueryHandler : IRequestHandler<GetBetResultQuery, Error
 
     public async Task<ErrorOr<BetResultResponse>> Handle(GetBetResultQuery request, CancellationToken cancellationToken)
     {
-        int[] originalOutcomes = { 1, 2, 4, 5, 3, 6, 7 };
-        List<List<int>> combinedOutcomes = new()
-        {
-            new List<int> { 1 },
-            new List<int> { 2 },
-            new List<int> { 4 },
-            new List<int> { 1, 4 },
-            new List<int> { 1, 2 },
-            new List<int> { 2, 4 },
-            new List<int> { 1, 2, 4 }
-        };
-    
-
         var query = from b in _context.BetCards
                     join s in _context.BetSelections on b.BetCardId equals s.BetCardId
                     join r in _context.BetResults on new { s.MatchId, b.MatchSelectionId, b.BetMatchType } equals new { r.MatchId, r.MatchSelectionId, r.BetMatchType } into br
@@ -70,22 +58,46 @@ public class GetBetResultQueryHandler : IRequestHandler<GetBetResultQuery, Error
         }
 
         List<MatchResponse> matchResponses = new();
-        
+        int[] originalOutcomes = { 1, 2, 4, 5, 3, 6, 7 };
+        List<List<int>> combinedOutcomes = new()
+        {
+            new List<int> { 1 },
+            new List<int> { 2 },
+            new List<int> { 4 },
+            new List<int> { 1, 4 },
+            new List<int> { 1, 2 },
+            new List<int> { 2, 4 },
+            new List<int> { 1, 2, 4 }
+        };
+
+        var dictionary = originalOutcomes.Zip(combinedOutcomes, (k, v) => new { k, v })
+                                 .ToDictionary(x => x.k, x => x.v);
+
+        var bothOutcomes = new List<int> { 5, 3, 6, 7 };
         foreach (var item in result)
         {
            var matchResult = "NotPlayed";
-           if(item.MatchResultId != 0)
+           if(item.OutcomeId != 0)
            {
-               var index = Array.IndexOf(originalOutcomes, item.OutcomeId);
-               if(index != -1)
-               {
-                  if(combinedOutcomes[index] != null)
-                  {
-                     var win = combinedOutcomes[index].Contains(item.MatchResultId);
-                     matchResult = win ? "Win" : "Loss";       
-                  }                       
-               }
+                if (item.OutcomeId == item.MatchResultId)
+                {
+                    matchResult = "Win";
+                }
+                else
+                {
+                    var r = new List<int>();
+                    var o = new List<int>();
+                    dictionary.TryGetValue(item.MatchResultId, out r);
+                    dictionary.TryGetValue(item.OutcomeId, out o);
+
+                    var matchResultIds = bothOutcomes.Contains(item.MatchResultId) ? r : new List<int> { item.MatchResultId };
+                    var outcomeIds = bothOutcomes.Contains(item.OutcomeId) ? o : new List<int> { item.OutcomeId };
+
+                    var win = matchResultIds.Intersect(outcomeIds).Count() == 1;
+                    matchResult = win ? "Win" : "Loss";           
+                }
            }
+
             MatchResponse response = new(
                                             MatchId: item.MatchId,
                                             OutcomeId: item.OutcomeId,

@@ -11,7 +11,103 @@
 import axios, { AxiosError } from 'axios';
 import type { AxiosInstance, AxiosRequestConfig, AxiosResponse, CancelToken } from 'axios';
 
-export class Client {
+export interface IClient {
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    login(body: LoginRequest | undefined): Promise<AuthenticationResult>;
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    addUser(body: AddUserRequest | undefined): Promise<AddUserResponse>;
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    updateUser(body: UpdateUserRequest | undefined): Promise<UpdateUserResponse>;
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    changePassword(body: ChangePasswordRequest | undefined): Promise<ChangePasswordResponse>;
+    /**
+     * @return Success
+     */
+    getCards(): Promise<MyBets[]>;
+    /**
+     * @return Success
+     */
+    getCard(id: number): Promise<MyBet[]>;
+    /**
+     * @return Success
+     */
+    getCardExtended(id: number): Promise<MyBetExtende>;
+    /**
+     * @return Success
+     */
+    getActiveBets(): Promise<GetActivBetsResponse[]>;
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    createMatchSelection(body: CreateMatchSelectionsRequest | undefined): Promise<CreateMatchSelectionsResponse>;
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    betOn(body: BetOnGame | undefined): Promise<BetOnGameResponse>;
+    /**
+     * @return Success
+     */
+    getBetResult(id: number): Promise<BetResultResponse>;
+    /**
+     * @return Success
+     */
+    getMatchSelectionsAll(): Promise<GetActiveMatchs[]>;
+    /**
+     * @return Success
+     */
+    getMatchSelections(id: number): Promise<GetActiveMatch>;
+    /**
+     * @return Success
+     */
+    getMatchTypesAll(): Promise<GetMatchTypes[]>;
+    /**
+     * @return Success
+     */
+    getMatchTypes(id: number): Promise<GetMatchTypes>;
+    /**
+     * @return Success
+     */
+    getOutcomes(): Promise<GetOutcomes[]>;
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    updateMatchResults(matchtypeId: number, matchSelectionId: number, body: UpdateBetResultRequest[] | undefined): Promise<UpdateBetResult[]>;
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    updateMatchResult(matchtypeId: number, matchSelectionId: number, body: UpdateBetResultRequest | undefined): Promise<UpdateBetResult>;
+    /**
+     * @return Success
+     */
+    getMatchResults(matchtypeId: number, matchSelectionId: number): Promise<GetMatchResult>;
+    /**
+     * @return Success
+     */
+    getTeams(): Promise<TeamResponse[]>;
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    addTeam(body: AddTeamCommand | undefined): Promise<TeamResponse>;
+}
+
+export class Client implements IClient {
     protected instance: AxiosInstance;
     protected baseUrl: string;
     protected jsonParseReviver: ((key: string, value: any) => any) | undefined = undefined;
@@ -1051,8 +1147,8 @@ export class Client {
      * @param body (optional) 
      * @return Success
      */
-    updateBetResult(matchtypeId: number, matchSelectionId: number, body: UpdateBetResultRequest[] | undefined, cancelToken?: CancelToken): Promise<UpdateBetResult[]> {
-        let url_ = this.baseUrl + "/Bet/update-bet-result/{matchtypeId}/{matchSelectionId}";
+    updateMatchResults(matchtypeId: number, matchSelectionId: number, body: UpdateBetResultRequest[] | undefined, cancelToken?: CancelToken): Promise<UpdateBetResult[]> {
+        let url_ = this.baseUrl + "/Bet/update-match-results/{matchtypeId}/{matchSelectionId}";
         if (matchtypeId === undefined || matchtypeId === null)
             throw new Error("The parameter 'matchtypeId' must be defined.");
         url_ = url_.replace("{matchtypeId}", encodeURIComponent("" + matchtypeId));
@@ -1081,11 +1177,11 @@ export class Client {
                 throw _error;
             }
         }).then((_response: AxiosResponse) => {
-            return this.processUpdateBetResult(_response);
+            return this.processUpdateMatchResults(_response);
         });
     }
 
-    protected processUpdateBetResult(response: AxiosResponse): Promise<UpdateBetResult[]> {
+    protected processUpdateMatchResults(response: AxiosResponse): Promise<UpdateBetResult[]> {
         const status = response.status;
         let _headers: any = {};
         if (response.headers && typeof response.headers === "object") {
@@ -1122,6 +1218,141 @@ export class Client {
             return throwException("An unexpected server error occurred.", status, _responseText, _headers);
         }
         return Promise.resolve<UpdateBetResult[]>(null as any);
+    }
+
+    /**
+     * @param body (optional) 
+     * @return Success
+     */
+    updateMatchResult(matchtypeId: number, matchSelectionId: number, body: UpdateBetResultRequest | undefined, cancelToken?: CancelToken): Promise<UpdateBetResult> {
+        let url_ = this.baseUrl + "/Bet/update-match-result/{matchtypeId}/{matchSelectionId}";
+        if (matchtypeId === undefined || matchtypeId === null)
+            throw new Error("The parameter 'matchtypeId' must be defined.");
+        url_ = url_.replace("{matchtypeId}", encodeURIComponent("" + matchtypeId));
+        if (matchSelectionId === undefined || matchSelectionId === null)
+            throw new Error("The parameter 'matchSelectionId' must be defined.");
+        url_ = url_.replace("{matchSelectionId}", encodeURIComponent("" + matchSelectionId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        const content_ = JSON.stringify(body);
+
+        let options_: AxiosRequestConfig = {
+            data: content_,
+            method: "PUT",
+            url: url_,
+            headers: {
+                "Content-Type": "application/json",
+                "Accept": "text/plain"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processUpdateMatchResult(_response);
+        });
+    }
+
+    protected processUpdateMatchResult(response: AxiosResponse): Promise<UpdateBetResult> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = UpdateBetResult.fromJS(resultData200);
+            return Promise.resolve<UpdateBetResult>(result200);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("Unauthorized", status, _responseText, _headers);
+
+        } else if (status === 403) {
+            const _responseText = response.data;
+            return throwException("Forbidden", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<UpdateBetResult>(null as any);
+    }
+
+    /**
+     * @return Success
+     */
+    getMatchResults(matchtypeId: number, matchSelectionId: number, cancelToken?: CancelToken): Promise<GetMatchResult> {
+        let url_ = this.baseUrl + "/Bet/get-match-results/{matchtypeId}/{matchSelectionId}";
+        if (matchtypeId === undefined || matchtypeId === null)
+            throw new Error("The parameter 'matchtypeId' must be defined.");
+        url_ = url_.replace("{matchtypeId}", encodeURIComponent("" + matchtypeId));
+        if (matchSelectionId === undefined || matchSelectionId === null)
+            throw new Error("The parameter 'matchSelectionId' must be defined.");
+        url_ = url_.replace("{matchSelectionId}", encodeURIComponent("" + matchSelectionId));
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_: AxiosRequestConfig = {
+            method: "GET",
+            url: url_,
+            headers: {
+                "Accept": "text/plain"
+            },
+            cancelToken
+        };
+
+        return this.instance.request(options_).catch((_error: any) => {
+            if (isAxiosError(_error) && _error.response) {
+                return _error.response;
+            } else {
+                throw _error;
+            }
+        }).then((_response: AxiosResponse) => {
+            return this.processGetMatchResults(_response);
+        });
+    }
+
+    protected processGetMatchResults(response: AxiosResponse): Promise<GetMatchResult> {
+        const status = response.status;
+        let _headers: any = {};
+        if (response.headers && typeof response.headers === "object") {
+            for (const k in response.headers) {
+                if (response.headers.hasOwnProperty(k)) {
+                    _headers[k] = response.headers[k];
+                }
+            }
+        }
+        if (status === 200) {
+            const _responseText = response.data;
+            let result200: any = null;
+            let resultData200  = _responseText;
+            result200 = GetMatchResult.fromJS(resultData200);
+            return Promise.resolve<GetMatchResult>(result200);
+
+        } else if (status === 401) {
+            const _responseText = response.data;
+            return throwException("Unauthorized", status, _responseText, _headers);
+
+        } else if (status === 403) {
+            const _responseText = response.data;
+            return throwException("Forbidden", status, _responseText, _headers);
+
+        } else if (status !== 200 && status !== 204) {
+            const _responseText = response.data;
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+        }
+        return Promise.resolve<GetMatchResult>(null as any);
     }
 
     /**
@@ -1951,6 +2182,58 @@ export interface IGetActiveMatchs {
     isEnabled?: boolean;
 }
 
+export class GetMatchResult implements IGetMatchResult {
+    matchTypeId?: number;
+    matchSelectionId?: number;
+    matches?: MatchResult[] | undefined;
+
+    constructor(data?: IGetMatchResult) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchTypeId = _data["matchTypeId"];
+            this.matchSelectionId = _data["matchSelectionId"];
+            if (Array.isArray(_data["matches"])) {
+                this.matches = [] as any;
+                for (let item of _data["matches"])
+                    this.matches!.push(MatchResult.fromJS(item));
+            }
+        }
+    }
+
+    static fromJS(data: any): GetMatchResult {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetMatchResult();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchTypeId"] = this.matchTypeId;
+        data["matchSelectionId"] = this.matchSelectionId;
+        if (Array.isArray(this.matches)) {
+            data["matches"] = [];
+            for (let item of this.matches)
+                data["matches"].push(item.toJSON());
+        }
+        return data;
+    }
+}
+
+export interface IGetMatchResult {
+    matchTypeId?: number;
+    matchSelectionId?: number;
+    matches?: MatchResult[] | undefined;
+}
+
 export class GetMatchTypes implements IGetMatchTypes {
     matchTypeId?: number;
     name?: string | undefined;
@@ -2165,6 +2448,46 @@ export interface IMatchResponse {
     outcomeId?: number;
     matchResultId?: number;
     matchResult?: string | undefined;
+}
+
+export class MatchResult implements IMatchResult {
+    matchId?: number;
+    outcomeId?: number;
+
+    constructor(data?: IMatchResult) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.matchId = _data["matchId"];
+            this.outcomeId = _data["outcomeId"];
+        }
+    }
+
+    static fromJS(data: any): MatchResult {
+        data = typeof data === 'object' ? data : {};
+        let result = new MatchResult();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["matchId"] = this.matchId;
+        data["outcomeId"] = this.outcomeId;
+        return data;
+    }
+}
+
+export interface IMatchResult {
+    matchId?: number;
+    outcomeId?: number;
 }
 
 export class MyBet implements IMyBet {
