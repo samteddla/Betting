@@ -26,7 +26,7 @@ public class BetResultCreatedHandler : IRequestHandler<BetResultCreated, BetResu
     {
         _logger.LogInformation("Handle : Worker running at: {time}", DateTimeOffset.Now);
 
-        using var channel = _channelFactory.CreateChannel();
+        using var channel = _channelFactory.GetChannel();
         var body = Encoding.UTF8.GetBytes(JsonSerializer.Serialize(request));
 
         channel.BasicPublish(exchange: _rabbitMQSettings.Value.ExchangeName,

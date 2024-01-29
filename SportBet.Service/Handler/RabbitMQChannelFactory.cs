@@ -7,6 +7,7 @@ namespace SportBet.Service.Handler;
 public class RabbitMQChannelFactory
 {
     private readonly IConnection _connection;
+    private IModel _channel;
     private readonly IOptions<RabbitMQSettings> _rabbitMQSettings;
     private readonly MessageConsumer _messageConsumer;
     public RabbitMQChannelFactory(IConnection connection,IOptions<RabbitMQSettings> rabbitMQSettingsOptions,
@@ -15,6 +16,18 @@ public class RabbitMQChannelFactory
         _connection = connection;
         _rabbitMQSettings = rabbitMQSettingsOptions;
         _messageConsumer = messageConsumer;
+        _channel = CreateChannel();
+    }
+
+    public IModel GetChannel() 
+    { 
+        if (_channel != null && _channel.IsOpen)
+        {
+            return _channel;
+        }
+        // If the channel is closed or null, create a new one
+        _channel = CreateChannel();
+        return _channel;
     }
 
     public IModel CreateChannel()
@@ -42,7 +55,7 @@ public class RabbitMQChannelFactory
         channel.BasicConsume(
             queue: _rabbitMQSettings.Value.QueueName,
             autoAck: true,
-            consumerTag: "This is FUN!",
+            consumerTag: "Bet-Service-Consumer",
             noLocal: false,
             exclusive: false,
             arguments: null,

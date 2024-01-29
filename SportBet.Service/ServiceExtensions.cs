@@ -24,7 +24,7 @@ public static class ServiceExtensions
                 HostName = rabbitMQSettings.Host,
                 UserName = rabbitMQSettings.Username,
                 Password = rabbitMQSettings.Password,
-                ClientProvidedName = "RabbitMQ-BetService"
+                ClientProvidedName = "Bet-Service"
             };
 
             return factory.CreateConnection();
@@ -42,12 +42,14 @@ public static class ServiceExtensions
 
         service.AddHostedService<ConsumerService>();
         // AddTransient so that I use the logger in the constructor of the Worker class
+        service.AddTransient<MessageConsumer>();
+        /*
         service.AddSingleton<MessageConsumer>(sp =>
         {
             var logger = sp.GetRequiredService<ILogger<MessageConsumer>>();
             //var channel = sp.GetRequiredService<RabbitMQChannelFactory>();
             return new MessageConsumer(logger);
-        });
+        });*/
         return service;
     }
 }

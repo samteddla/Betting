@@ -68,6 +68,6 @@ public class MessageConsumer : IBasicConsumer
     }
     public void HandleModelShutdown(object model, ShutdownEventArgs reason)
     {
-        _logger.LogInformation($"HandleModelShutdown: {reason.ReplyText}");
+        _logger.LogInformation($"***************** HandleModelShutdown: {reason.ReplyText}");
     }
 }

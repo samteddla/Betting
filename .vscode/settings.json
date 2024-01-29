@@ -4,7 +4,7 @@
 	"git.confirmSync": false,
 	"editor.fontFamily": "'Cascadia Code Light', 'Courier New', monospace",
 	"editor.fontSize": 16,
-	"workbench.colorTheme": "Nord Native",
+	"workbench.colorTheme": "Nord",
 	"files.autoSave": "onFocusChange",
 	"explorer.confirmDelete": false,
 	"github.copilot.enable": {

@@ -12,3 +12,12 @@ POST /Bet/create-match-selection HTTP/1.1
     1,2,3
   ]
 }
+
+####    
+post https://localhost:65415/createbook HTTP/1.1
+Accept: application/json
+
+{
+    "Title":"Samson 9",
+    "Author":"Harry Potter"
+}
