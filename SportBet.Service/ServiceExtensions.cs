@@ -1,7 +1,6 @@
 
 using System.Reflection;
 using RabbitMQ.Client;
-using SportBet.Service.Handler;
 using SportBet.Service.Message;
 using SportBet.Service.Services;
 
@@ -31,25 +30,9 @@ public static class ServiceExtensions
         });
         service.AddSingleton<RabbitMQChannelFactory>();
         service.AddMediatR(cfg => cfg.RegisterServicesFromAssemblies(Assembly.GetExecutingAssembly()));
-
-        /*
-        service.Configure<HostOptions>(options =>
-        {
-            options.ServicesStartConcurrently = true;
-            options.ServicesStopConcurrently = false;
-        });
-        service.AddHostedService<Worker>();*/
-
-        service.AddHostedService<ConsumerService>();
         // AddTransient so that I use the logger in the constructor of the Worker class
         service.AddTransient<MessageConsumer>();
-        /*
-        service.AddSingleton<MessageConsumer>(sp =>
-        {
-            var logger = sp.GetRequiredService<ILogger<MessageConsumer>>();
-            //var channel = sp.GetRequiredService<RabbitMQChannelFactory>();
-            return new MessageConsumer(logger);
-        });*/
+        service.AddHostedService<ConsumerService>();
         return service;
     }
 }

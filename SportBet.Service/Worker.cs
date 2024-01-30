@@ -1,10 +1,8 @@
 
-using System.Security.Cryptography;
 using MediatR;
 using Microsoft.Extensions.Options;
-using RabbitMQ.Client.Events;
-using SportBet.Service.Handler;
 using SportBet.Service.Message;
+using SportBet.Service.Services;
 
 namespace SportBet.Service;
 

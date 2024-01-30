@@ -1,10 +1,11 @@
+##### How to use mediator pattern in .NET Core to push messages to RabbitMQ
 
+```csharp
 using System.Text;
 using System.Text.Json;
 using MediatR;
 using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
-using RabbitMQ.Client.Events;
 using SportBet.Service.Message;
 
 namespace SportBet.Service.Handler;
@@ -40,3 +41,28 @@ public class BetResultCreatedHandler : IRequestHandler<BetResultCreated, BetResu
         });
     }
 }
+```
+
+##### SportBet.Service
+```csharp
+    int id = 0;
+    while (!stoppingToken.IsCancellationRequested)
+    {            
+        // You can add any other background processing logic here
+        CreateMessage(id++, stoppingToken);
+        await Task.Delay(5000, stoppingToken);
+    }
+
+    private void CreateMessage(int id, CancellationToken cancellationToken)
+    {
+        var message = new BetResultCreated
+        {
+            MatchTypeId = RandomNumberGenerator.GetInt32(1, 3),
+            MatchSelectionId = RandomNumberGenerator.GetInt32(2, 30),
+            MatchId = RandomNumberGenerator.GetInt32(1, 20),
+            MatchResultId = id,
+        };
+        _logger.LogInformation($"BetResultCreated :  {JsonSerializer.Serialize(message)}");
+        _mediator.Send(message, cancellationToken);
+    }
+```

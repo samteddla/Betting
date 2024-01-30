@@ -28,27 +28,35 @@ else
     dbContext.Database.EnsureCreated();
 }
 });*/
+var utils = new Utils();
+app.AddCommand("do", () =>
+{
+    Console.WriteLine("Nothing to do");
+});
 
+app.AddSubCommand("database", x =>
+{
+    x.AddCommand("delete", () => dbContext.Database.EnsureDeleted());
+    x.AddCommand("create", () => dbContext.Database.EnsureCreated());
+    x.AddCommand("sample", () => utils.CreateFirstTimeData(dbContext));
+}).WithDescription("database commands");;
+
+/*
 app.AddCommand("add", () =>
 {
-    Console.WriteLine("Add command");
+    Console.WriteLine("Create the database if it does not exist");
     dbContext.Database.EnsureCreated();
 });
 app.AddCommand("delete", () =>
 {
-    Console.WriteLine("Delete command");
+    Console.WriteLine("delete the database if it exists");
     dbContext.Database.EnsureDeleted();
 });
 app.AddCommand("create", () =>
 {
-    Console.WriteLine("Create command");
-
-    var utils = new Utils();
+    Console.WriteLine("initialize the database with test data");
     utils.CreateFirstTimeData(dbContext);
-});
+});*/
 
-app.AddCommand("do", () =>
-{
-    Console.WriteLine("Do command");
-});
+
 app.Run();

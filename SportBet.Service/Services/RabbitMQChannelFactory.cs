@@ -2,9 +2,9 @@ using Microsoft.Extensions.Options;
 using RabbitMQ.Client;
 using SportBet.Service.Message;
 
-namespace SportBet.Service.Handler;
+namespace SportBet.Service.Services;
 
-public class RabbitMQChannelFactory
+public class RabbitMQChannelFactory : IDisposable
 {
     private readonly IConnection _connection;
     private IModel _channel;
@@ -62,5 +62,16 @@ public class RabbitMQChannelFactory
             consumer: _messageConsumer);
 
         return channel;
+    }
+
+    public void Dispose()
+    {
+        Close();
+    }
+
+    private void Close()
+    {
+        _channel?.Close();
+        _connection?.Close();
     }
 }
