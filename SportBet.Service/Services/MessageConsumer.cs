@@ -6,7 +6,7 @@ namespace SportBet.Service.Services;
 public class MessageConsumer(ILogger<MessageConsumer> logger) : IBasicConsumer
 {
     private readonly ILogger<MessageConsumer> _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-    public event EventHandler<ConsumerEventArgs> ConsumerCancelled;
+    public event EventHandler<ConsumerEventArgs>? ConsumerCancelled; // Add a question mark to make the event nullable
     public IModel Model => throw new NotImplementedException();
 
     public void HandleBasicDeliver(string consumerTag,
@@ -38,6 +38,7 @@ public class MessageConsumer(ILogger<MessageConsumer> logger) : IBasicConsumer
     
     public void HandleModelShutdown(object model, ShutdownEventArgs reason)
     {
+        ConsumerCancelled?.Invoke(this, new ConsumerEventArgs(["Hello", "World"]));
         _logger.LogInformation($"HandleModelShutdown: {reason.ReplyText}");
     }
     public void HandleBasicCancel(string consumerTag)

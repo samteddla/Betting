@@ -17,7 +17,9 @@
     <PackageReference Include="Mapster.DependencyInjection" Version="1.0.1" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.5.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.5.0" />
-  </ItemGroup>
+    <PackageReference Include="MassTransit" Version="8.0.1" />
+		<PackageReference Include="MassTransit.RabbitMQ" Version="8.0.1" />
+	</ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\SportBet.Application\SportBet.Application.csproj" />

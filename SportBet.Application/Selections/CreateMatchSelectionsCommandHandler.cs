@@ -87,6 +87,7 @@ public class CreateMatchSelectionsCommandHandler :
         }
         catch (Exception ex)
         {
+            Console.WriteLine(ex.Message);
             transaction.Rollback();
             throw;
         }

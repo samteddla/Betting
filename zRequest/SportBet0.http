@@ -1,6 +1,6 @@
 @HostAddress = http://localhost:5002
 @home = http://localhost:5002/swagger/
-@Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiSm9obkRvZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImJldDFAU3BvcnRiZXQuY29tIiwidS1pZCI6IjEiLCJ1LXBob25lIjoiMTIzNDU2Nzg5IiwidS1uYW1lIjoiSm9obkRvZSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIlVzZXIiXSwibXktc2NvcGUiOiJjYW5Xcml0ZSIsImV4cCI6MTcxMTQ2NzgyNywiaXNzIjoiaHR0cHM6Ly9zcG9ydGJldC5jb20iLCJhdWQiOiJzcG9ydGJldCBBdWRpZW5jZSJ9.PJIWzXaIlj11dEDddj_eRlBqjkD3NAlwO0OdzM6ZEs8
+@Token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6IjEiLCJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1lIjoiSm9obkRvZSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6ImJldDFAU3BvcnRiZXQuY29tIiwidS1pZCI6IjEiLCJ1LXBob25lIjoiMTIzNDU2Nzg5IiwidS1uYW1lIjoiSm9obkRvZSIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6WyJBZG1pbiIsIlVzZXIiXSwibXktc2NvcGUiOiJjYW5Xcml0ZSIsImV4cCI6MTcxMjEyNTI5NiwiaXNzIjoiaHR0cHM6Ly9zcG9ydGJldC5jb20iLCJhdWQiOiJzcG9ydGJldCBBdWRpZW5jZSJ9.d6AyqkxFNDs3865x9owPc69o7IWgIFeou4xpe2IuMUA
 ### 
 GET {{HostAddress}}/team
 Accept: application/json
@@ -37,11 +37,11 @@ Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-  "name": "Game ON!",
-  "description": "Week 3",
+  "name": "Game ON +++",
+  "description": "Week 4",
   "activeUntil": "2024-02-24T21:58:04.970Z",
   "matches": [
-    9,8
+    1,2
   ],
   "matchesTypes": [
     1,2,3
@@ -65,15 +65,14 @@ Content-Type: application/json
   ]
 }
 ###
-@matchtypeid = 1
-PUT {{HostAddress}}/Bet/update-bet-result/{{matchtypeid}} HTTP/1.1
+@matchtypeid = 3
+@matchSelectionId = 2
+PUT {{HostAddress}}/Bet/update-match-result/{{matchtypeid}}/{{matchSelectionId}} HTTP/1.1
 Accept: application/json
 Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-  "matchTypeId": 3,
-  "matchSelectionId": 1,
-  "matchId": 4,
-  "outcomeId": 1
+  "matchId": 1,
+  "outcomeId": 3
 }

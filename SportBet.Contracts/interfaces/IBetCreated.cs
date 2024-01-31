@@ -2,8 +2,9 @@
 
 public interface IBetCreated
 {
-    DateTime ResultDate { get; }
     int MatchTypeId { get; }
     int MatchSelectionId { get; }
     int MatchId { get; }
+    int OutcomeId { get; }
+    DateTime ResultDate { get; }
 }

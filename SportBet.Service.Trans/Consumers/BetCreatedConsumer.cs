@@ -10,12 +10,22 @@ public class BetCreatedConsumer : IConsumer<IBetCreated>
     {
         try
         {
-             var serializedMessage = await Task.Run(() =>  JsonSerializer.Serialize(context.Message, new JsonSerializerOptions { }));
-
-        Console.WriteLine($@"BetCreated event consumed 
+            var serializedMessage = await Task.Run(() => JsonSerializer.Serialize(context.Message, new JsonSerializerOptions { }));
+            Console.WriteLine($@"BetCreated event consumed 
                                 Message: 
                                 {serializedMessage}");
+            ConsoleLog(context);
 
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($@"Error: {ex.Message}");
+            throw;
+        }
+    }
+
+    private void ConsoleLog(ConsumeContext<IBetCreated> context)
+    {
         Console.WriteLine($@"   FaultAddress : {context.FaultAddress}
                                 InputAddress : {context.ResponseAddress}
                                 SupportedMessageTypes : {context.SupportedMessageTypes}
@@ -29,15 +39,7 @@ public class BetCreatedConsumer : IConsumer<IBetCreated>
                                 SentTime : {context.SentTime}
                                 Headers : {JsonSerializer.Serialize(context.Headers, new JsonSerializerOptions { })}
                                 Host : {JsonSerializer.Serialize(context.Host, new JsonSerializerOptions { })}
-                                SerializerContext : {JsonSerializer.Serialize(context.SerializerContext, new JsonSerializerOptions { })}");   
-        }
-        catch (Exception ex)
-        {
-            Console.WriteLine($@"Error: {ex.Message}");
-            throw;
-        }                          
+                                SerializerContext : {JsonSerializer.Serialize(context.SerializerContext, new JsonSerializerOptions { })}");
+
     }
 }
-/*
- 
-*/

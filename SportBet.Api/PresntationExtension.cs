@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using MassTransit;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -7,6 +8,7 @@ using Serilog;
 using SportBet.Api.Common;
 using SportBet.Api.Mapping;
 using SportBet.Application.Caching;
+using SportBet.Contracts.Settings;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
 
@@ -25,13 +27,41 @@ public static class PresentationExtension
                 options.JsonSerializerOptions.WriteIndented = true;
                 options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
             });
-            
+
         services.AddSingleton<ProblemDetailsFactory, ApiProblemDetailsFactory>();
         services.AddHttpContextAccessor();
 
         services.AddSwagger();
         services.AddSerilog(configuration);
         services.AddMapping();
+
+        services.AddMassTransitWithRabitMq(configuration);
+
+        return services;
+    }
+
+    public static IServiceCollection AddMassTransitWithRabitMq(this IServiceCollection services, ConfigurationManager configuration)
+    {
+        var rabbitMqSettings = configuration.GetSection(RabbitMqSettings.SectionName).Get<RabbitMqSettings>();
+
+        if (rabbitMqSettings == null)
+        {
+            throw new Exception("RabbitMQSettings section is missing, see appsettings.json");
+        }
+
+        services.AddMassTransit(busConfigurator =>
+        {
+            busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
+            {
+                busFactoryConfigurator.Host(rabbitMqSettings.Host, hostConfigurator =>
+                {
+                    hostConfigurator.Username(rabbitMqSettings.Username);
+                    hostConfigurator.Password(rabbitMqSettings.Password);
+                });
+                busFactoryConfigurator.OverrideDefaultBusEndpointQueueName(rabbitMqSettings.QueueName);
+            });
+            // busConfigurator.SetEndpointNameFormatter(new KebabCaseEndpointNameFormatter(prefix: "Dev", includeNamespace: false));
+        });
 
         return services;
     }

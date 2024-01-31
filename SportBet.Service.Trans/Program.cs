@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Hosting;
 using SportBet.Service.Trans.Consumers;
 using Microsoft.Extensions.Configuration;
+using SportBet.Contracts.Settings;
 
 var builder = Host.CreateDefaultBuilder(args);
 
@@ -10,7 +11,7 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.Development.json", optional: false, reloadOnChange: true)
     .Build();
 
-var rabbitMQSettings = configuration.GetSection("RabbitMQSettings").Get<RabbitMQSettings>();
+var rabbitMQSettings = configuration.GetSection("RabbitMQSettings").Get<RabbitMqSettings>();
 
 if (rabbitMQSettings == null)
 {
@@ -25,7 +26,12 @@ builder.ConfigureServices((hostContext, services) =>
         //busConfigurator.AddConsumers(entryAssembly);
 
         busConfigurator.AddConsumer<BetCreatedConsumer>()
-                .Endpoint(e => e.Name = "bet-created-excange");
+                .Endpoint(e => 
+                {
+                    e.Name = "bet-created";
+                    e.ConcurrentMessageLimit = 2;
+                    e.Temporary = false;
+                });
 
         busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
         {
@@ -35,7 +41,8 @@ builder.ConfigureServices((hostContext, services) =>
                 busFactoryConfigurator.ReceiveEndpoint("user-created-queue", e =>{e.ConfigureConsumer<UserCreatedConsumer>(context);});
             */
 
-            busFactoryConfigurator.Host(rabbitMQSettings.Host, "/", hostConfigurator =>
+            busFactoryConfigurator.Host(rabbitMQSettings.Host, "/", 
+            hostConfigurator =>
             {
                 hostConfigurator.Username(rabbitMQSettings.Username);
                 hostConfigurator.Password(rabbitMQSettings.Password);
@@ -43,7 +50,7 @@ builder.ConfigureServices((hostContext, services) =>
             );
 
             busFactoryConfigurator.ConfigureEndpoints(context);
-            busFactoryConfigurator.OverrideDefaultBusEndpointQueueName("my-service");
+            busFactoryConfigurator.OverrideDefaultBusEndpointQueueName(rabbitMQSettings.QueueName);
         });
     });
 });

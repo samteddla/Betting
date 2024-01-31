@@ -1,4 +1,5 @@
 using System.Text.Json;
+using MassTransit;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SportBet.Application.Cards;
@@ -6,6 +7,7 @@ using SportBet.Application.Games;
 using SportBet.Application.Selections;
 using SportBet.Contracts.Cards;
 using SportBet.Contracts.Games;
+using SportBet.Contracts.Interfaces;
 using SportBet.Contracts.Selection;
 
 namespace SportBet.Api;
@@ -16,10 +18,12 @@ namespace SportBet.Api;
 public class BetController : ApiController
 {
     private readonly ILogger<BetController> _logger;
+    public readonly IPublishEndpoint _publishEndpoint;
 
-    public BetController(ILogger<BetController> logger)
+    public BetController(ILogger<BetController> logger, IPublishEndpoint publishEndpoint)
     {
         _logger = logger;
+        _publishEndpoint = publishEndpoint;
     }
 
     // get cards
@@ -190,6 +194,18 @@ public class BetController : ApiController
             MatchSelectionId : matchSelectionId,
             MatchId : request.MatchId,
             OutcomeId : request.OutcomeId));
+
+        if(!result.IsError)
+        {
+            await _publishEndpoint.Publish<IBetCreated>(new
+            {
+                MatchTypeId = matchtypeId,
+                MatchSelectionId = matchSelectionId,
+                request.MatchId,
+                request.OutcomeId,
+                ResultDate = DateTime.Now
+            });
+        }
 
         return result.Match(
             base.Ok,

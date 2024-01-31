@@ -76,9 +76,9 @@ public class GetBetResultQueryHandler : IRequestHandler<GetBetResultQuery, Error
         var bothOutcomes = new List<int> { 5, 3, 6, 7 };
         foreach (var item in result)
         {
-           var matchResult = "NotPlayed";
-           if(item.OutcomeId != 0)
-           {
+            var matchResult = "NotPlayed";
+            if (item.OutcomeId != 0)
+            {
                 if (item.OutcomeId == item.MatchResultId)
                 {
                     matchResult = "Win";
@@ -93,10 +93,13 @@ public class GetBetResultQueryHandler : IRequestHandler<GetBetResultQuery, Error
                     var matchResultIds = bothOutcomes.Contains(item.MatchResultId) ? r : new List<int> { item.MatchResultId };
                     var outcomeIds = bothOutcomes.Contains(item.OutcomeId) ? o : new List<int> { item.OutcomeId };
 
-                    var win = matchResultIds.Intersect(outcomeIds).Count() == 1;
-                    matchResult = win ? "Win" : "Loss";           
+                    if (matchResultIds != null && matchResultIds.Any() && outcomeIds != null && outcomeIds.Any())
+                    {
+                        var win = matchResultIds.Intersect(outcomeIds).Count() == 1;
+                        matchResult = win ? "Win" : "Loss";
+                    }
                 }
-           }
+            }
 
             MatchResponse response = new(
                                             MatchId: item.MatchId,
@@ -104,8 +107,8 @@ public class GetBetResultQueryHandler : IRequestHandler<GetBetResultQuery, Error
                                             MatchResult: matchResult,
                                             MatchResultId: item.MatchResultId
                                         );
-              matchResponses.Add(response);
-        }                                                     
+            matchResponses.Add(response);
+        }
 
         var totalWinCount = matchResponses.Select(m => m.MatchResult).Where(m => m == "Win").Count();
         return ErrorOr.ErrorOr.From(new BetResultResponse(
