@@ -64,7 +64,7 @@ Content-Type: application/json
     1,2,3
   ]
 }
-###
+### 
 @matchtypeid = 3
 @matchSelectionId = 2
 PUT {{HostAddress}}/Bet/update-match-result/{{matchtypeid}}/{{matchSelectionId}} HTTP/1.1

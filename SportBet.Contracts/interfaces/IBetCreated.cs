@@ -8,3 +8,9 @@ public interface IBetCreated
     int OutcomeId { get; }
     DateTime ResultDate { get; }
 }
+
+
+public interface IMessageCreated
+{
+    int MessageId {get;}
+}

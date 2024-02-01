@@ -53,7 +53,7 @@ public static class PresentationExtension
         {
             busConfigurator.UsingRabbitMq((context, busFactoryConfigurator) =>
             {
-                busFactoryConfigurator.Host(rabbitMqSettings.Host, hostConfigurator =>
+                busFactoryConfigurator.Host(rabbitMqSettings.Host, rabbitMqSettings.VirtualHost, hostConfigurator =>
                 {
                     hostConfigurator.Username(rabbitMqSettings.Username);
                     hostConfigurator.Password(rabbitMqSettings.Password);

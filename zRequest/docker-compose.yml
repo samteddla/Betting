@@ -8,7 +8,7 @@ services:
       RABBITMQ_DEFAULT_USER: "admin"
       RABBITMQ_DEFAULT_PASS: "admin123456"
     volumes:
-      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+          - rabbitmq-driver:/var/lib/rabbitmq    # use a volume to store the data    
     ports:
       - "5672:5672"  # RabbitMQ default port
       - "15672:15672"  # RabbitMQ Management Plugin port
@@ -17,7 +17,9 @@ services:
     restart: always
 
 volumes:
-  volume:
+    rabbitmq-driver:
+      driver: local
+      name : rabbitmq-driver
 
 networks:
   rabbitmq-network:

@@ -4,6 +4,14 @@ using System.Text.Json;
 
 namespace SportBet.Service.Trans.Consumers;
 
+public class MessageCreatedConsumer : IConsumer<IMessageCreated>
+{
+    public Task Consume(ConsumeContext<IMessageCreated> context)
+    {
+        throw new NotImplementedException();
+    }
+}
+
 public class BetCreatedConsumer : IConsumer<IBetCreated>
 {
     public async Task Consume(ConsumeContext<IBetCreated> context)

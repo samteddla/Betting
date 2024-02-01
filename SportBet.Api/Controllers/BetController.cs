@@ -18,12 +18,14 @@ namespace SportBet.Api;
 public class BetController : ApiController
 {
     private readonly ILogger<BetController> _logger;
-    public readonly IPublishEndpoint _publishEndpoint;
+    private readonly IPublishEndpoint _publishEndpoint;
+    private readonly ISendEndpointProvider _sendEndpointProvider;
 
-    public BetController(ILogger<BetController> logger, IPublishEndpoint publishEndpoint)
+    public BetController(ILogger<BetController> logger, IPublishEndpoint publishEndpoint, ISendEndpointProvider sendEndpointProvider)
     {
         _logger = logger;
         _publishEndpoint = publishEndpoint;
+        _sendEndpointProvider = sendEndpointProvider;
     }
 
     // get cards
@@ -205,6 +207,11 @@ public class BetController : ApiController
                 request.OutcomeId,
                 ResultDate = DateTime.Now
             });
+
+            var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:consumer-created"));
+            await endpoint.Send<IMessageCreated>(new { MessageId = 10020  });
+
+            await _publishEndpoint.Publish<IMessageCreated>(new { MessageId = 20010 });
         }
 
         return result.Match(
