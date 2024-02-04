@@ -6,7 +6,7 @@ import { Client, type TeamResponse } from '@/api/api2'
 
 export const TeamStore = defineStore("team", () => {
     const axiosClient = AxiosClient.getApi();
-    const team = ref(<TeamResponse>[]);
+    const team = ref(<TeamResponse>{});
     const teams = ref<TeamResponse[]>([])
 
     const api = new Client(undefined, axiosClient);

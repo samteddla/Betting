@@ -119,7 +119,7 @@ const show = ref(true);
 const costs = ref(0);
 const canBuy = ref(false);
 const halfandFullTime = ref(1);
-const store = MatchStore();
+const store = MatchStore() ?? {};
 const auth = AuthStore();
 const outcomes = ref([
     {

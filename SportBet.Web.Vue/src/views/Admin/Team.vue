@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { TeamComponent } from '@/components/teams/Index';
+import { TeamComponent } from '@/components/Teams';
 import { MatchStore } from '@/store';
 
 const store = MatchStore();

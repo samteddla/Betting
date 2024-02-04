@@ -37,11 +37,11 @@ Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-  "name": "Game ON +++",
+  "name": "Game ON",
   "description": "Week 4",
   "activeUntil": "2024-02-24T21:58:04.970Z",
   "matches": [
-    1,2
+    9,8
   ],
   "matchesTypes": [
     1,2,3
@@ -65,14 +65,14 @@ Content-Type: application/json
   ]
 }
 ### 
-@matchtypeid = 3
-@matchSelectionId = 2
+@matchtypeid = 1
+@matchSelectionId = 1 
 PUT {{HostAddress}}/Bet/update-match-result/{{matchtypeid}}/{{matchSelectionId}} HTTP/1.1
 Accept: application/json
 Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-  "matchId": 1,
+  "matchId": 2,
   "outcomeId": 3
 }

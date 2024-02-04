@@ -41,7 +41,7 @@
                             <v-row class="small">
                                 <v-col v-for="c in outcomes" :key="c.outcomeId">
                                     <v-checkbox v-model="store.playOutcome"
-                                        :class="aWin(match.matchResultId, c.outcomeId) ? match.matchResult : ''" label=""
+                                        :class="aWin(match.matchResultId??0, c.outcomeId) ? match.matchResult : ''" label=""
                                         disabled hide-details :value="{ matchId: match.matchId, outcomeId: c.outcomeId }">
                                     </v-checkbox>
                                 </v-col>

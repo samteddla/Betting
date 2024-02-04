@@ -20,7 +20,7 @@ export const AuthStore = defineStore("auth", () => {
   const passwordResponse = ref<ChangePasswordResponse>();
 
   const login = async (username: string, password: string) => {
-    const loginRequest: LoginRequest = {
+    const loginRequest : LoginRequest = {
       username: username,
       password: password
     };

@@ -18,7 +18,7 @@
     <div class="mx-2 my-3" width="140px" title="Sports">Sports</div>
 
     <div v-if="store.matchs" class="d-flex flex-wrap ga-3 mx-6 my-3">
-      <v-card class="mx-auto" v-for="n in store.matchs" :key="n.matchSelectionId" :color="getColor(n.matchSelectionId)" width="140px"
+      <v-card class="mx-auto" v-for="n in store.matchs" :key="n.matchSelectionId" :color="getColor(n.matchSelectionId??0)" width="140px"
         link :to="`/game/${n.matchSelectionId}`" @click="closeDrawer">
         <v-card-text>
           {{ n.name }}
