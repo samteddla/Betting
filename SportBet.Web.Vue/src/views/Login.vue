@@ -53,7 +53,7 @@
 
     const submitLogin = async () => {
       console.log(login.value.email, login.value.password);
-        await authStore.login(login.value.email, login.value.password);
+        await authStore.login(login.value.email ?? '', login.value.password ?? '');
     }
     
     const emailRules = [

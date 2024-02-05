@@ -171,7 +171,7 @@ const submitMatch = async () => {
     console.log(responses);
     await store.updateMatchResult(responses);
     alertVisible.value = true;
-    alertVisibleMessage.value = store.updatedBetResult?.map((c: any) => c.message + '\n\r') ?? "";
+    alertVisibleMessage.value = (store.updatedBetResult?.map((c: any) => c.message) ?? []).join('\n\r');
     console.log(store.updatedBetResult);
     setTimeout(() => (alertVisible.value = false), 5000);
 }

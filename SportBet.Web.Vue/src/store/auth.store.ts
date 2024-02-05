@@ -22,7 +22,13 @@ export const AuthStore = defineStore("auth", () => {
   const login = async (username: string, password: string) => {
     const loginRequest : LoginRequest = {
       username: username,
-      password: password
+      password: password,
+      init: function (_data?: any): void {
+        throw new Error("Function not implemented.");
+      },
+      toJSON: function (data?: any) {
+        throw new Error("Function not implemented.");
+      }
     };
     const response = await api.login(loginRequest).then((res) => {
       return res;

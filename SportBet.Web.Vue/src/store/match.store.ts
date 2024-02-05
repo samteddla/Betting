@@ -5,7 +5,7 @@ import { useAlertStore } from "@/store";
 import { Client } from '@/api/api2'
 
 import {type GetMatchResult, type MyBetExtende, type GetActiveMatchs, type GetActiveMatch, type BetOnGame, type GetActivBetsResponse, type BetResultResponse,
-type MyBet, type UpdateBetResult } from "@/api/api2";
+type MyBet, type UpdateBetResult , type MatchRequest} from "@/api/api2";
 
 export const MatchStore = defineStore("match", () => {
 
@@ -65,9 +65,15 @@ export const MatchStore = defineStore("match", () => {
         });
     }
    
-    const betOn = async (betOnRequest : BetOnGame) => {  
+    const betNow = async (betOnRequest : BetOnGame) => {  
         
-        betOnRequest.matches = createPlayOutCome(betOnRequest.matches);
+        betOnRequest.matches = (betOnRequest.matches as { matchId: number; outcomeId: number; }[]).map((match) => {
+            return {
+                ...match,
+                init: () => {},
+                toJSON: () => {}
+            } as MatchRequest;
+        });
 
         return await api.betOn(betOnRequest).then((response) => {            
             return response;
@@ -89,7 +95,7 @@ export const MatchStore = defineStore("match", () => {
     const getMyCardExtende = async (id: number) => {
         cardExtended.value = await api.getCardExtended(id).then((response) => {
         
-            playOutcome.value = (response.matches === null || response.matches === undefined)? null 
+            playOutcome.value = (response.matches === undefined)? [] 
             : response.matches.map((c : any) => {
                 return { matchId: c.matchId, outcomeId: c.outcomeId};
             });
@@ -108,17 +114,17 @@ export const MatchStore = defineStore("match", () => {
             return response;
         });
 
-        if(playedCard.value !== null){
+        if(playedCard.value !== undefined){
             playOutcome.value = playedCard.value.map((c : any) => {
                 return { matchId: c.matchId, outcomeId: c.outcomeId };
             });
-
-            card.value?.matches.forEach((e: { matchId: number; matchResult: any; }) => {
+            /*
+            card.value.matches.forEach((e: { matchId: number; matchResult: any; }) => {
                 const index = playOutcome.value.findIndex((p) => p.matchId === e.matchId);
                 if (index !== -1) {
                     playOutcome.value[index].Win = e.matchResult;
                 }                
-            });
+            });*/
             console.log("playedCard.value");
             console.log(playOutcome.value);
         }
@@ -153,8 +159,8 @@ export const MatchStore = defineStore("match", () => {
 
     const createPlayOutCome = (input :any) =>
     {
-        const groupedMatches = {};
         const result = [];
+        const groupedMatches: { [key: string]: { matchId: number, outcomeId: number } } = {};
         input.forEach((item : any) => {
             const matchId = item.matchId;
             const outcomeId = item.outcomeId;
@@ -172,5 +178,5 @@ export const MatchStore = defineStore("match", () => {
         return result;
     }
 
-    return {matchResult, updatedBetResult, cardExtended, match, matchs,cards,card,playedCard,playOutcome,getMatchResults,updateMatchResult, getMatches, getMatch, betOn, getMyCards, getMyCardDetail, getPlayedCard, getMyCardExtende };
+    return {matchResult, updatedBetResult, cardExtended, match, matchs,cards,card,playedCard,playOutcome,getMatchResults,updateMatchResult, getMatches, getMatch, betNow, getMyCards, getMyCardDetail, getPlayedCard, getMyCardExtende };
 });

@@ -124,7 +124,7 @@ export class Client implements IClient {
      * @param body (optional) 
      * @return Success
      */
-    login(body: LoginRequest | undefined, cancelToken?: CancelToken): Promise<AuthenticationResult> {
+    login(body: LoginRequest, cancelToken?: CancelToken): Promise<AuthenticationResult> {
         let url_ = this.baseUrl + "/Auth";
         url_ = url_.replace(/[?&]$/, "");
 

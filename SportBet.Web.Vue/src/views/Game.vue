@@ -114,6 +114,7 @@ import { useRoute } from 'vue-router'
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { MatchStore, AuthStore } from '@/store';
 import router from '@/router';
+import { BetOnGame } from '@/api/api2';
 
 const show = ref(true);
 const costs = ref(0);
@@ -154,7 +155,7 @@ watch(() => route.params.id,
 
 // watch the selectedChoices AND selectionId at the same time
 watch([selectedChoices, selectionId], (val: any) => {
-    var machIds = store.match.matches.map((m: any) => m.matchId);
+    var machIds = store.match?.matches?.map((m: any) => m.matchId) ?? [];
     var length = machIds.length;
     var selectedMatchIds = val[0].map((c: any) => c.matchId);
     var wat = parseInt(val[1].toString());
@@ -209,7 +210,7 @@ onUnmounted(() => {
 });
 
 const submitMatch = async () => {
-    const responses = {
+    const responses: BetOnGame = { // Declare the responses variable with the BetOnGame type
         "selectionId": store.match?.matchSelectionId,
         "matchTypeId": selectionId.value, /* 1 full time 2 half time  3 full time and half time*/
         "amount": costs.value,
@@ -223,8 +224,7 @@ const submitMatch = async () => {
 
     console.log(responses);
 
-    var resp = await store.betOn(responses);
-    console.log(resp);
+    var resp = await store.betNow(responses);
     if (resp) {
         if (resp.isSaved) {
             alertVisible.value = true;
@@ -253,7 +253,7 @@ const testMe = () => {
         }
     });
 
-    const groupedMatches = {};
+    const groupedMatches: { matchId: number; outcomeId: number }[] = [];
     result.value = [];
     inputArray.forEach((item) => {
         const matchId = item.matchId;
@@ -276,8 +276,45 @@ const testMe = () => {
 
     reversedArray.value = [];
     for (const item of result.value) {
-        const matchId = item.matchId;
-        const originalOutcomeId = item.outcomeId;
+        const groupedMatches: { matchId: number; outcomeId: number }[] = [];
+        result.value = [];
+        inputArray.forEach((item) => {
+            const matchId = item.matchId;
+            const outcomeId = item.outcomeId;
+
+            if (!groupedMatches[matchId]) {
+                groupedMatches[matchId] = { matchId, outcomeId: outcomeId };
+            } else {
+                groupedMatches[matchId].outcomeId += outcomeId;
+            }
+        });
+
+        for (const matchsId in groupedMatches) {
+            const groupedMatches: { matchId: number; outcomeId: number }[] = []; // Update the type declaration of groupedMatches to be an array
+            result.value.push(groupedMatches[matchsId]);
+        }
+
+        // db match list to web
+        const originalOutcomes = [1, 2, 4, 5, 3, 6, 7]
+        const combinedOutcomes = [[1], [2], [4], [1, 4], [1, 2], [2, 4], [1, 2, 4]];
+
+        reversedArray.value = [];
+        for (const item of result.value) {
+            const matchId: number = item.matchId as number; // Fix: Assert the type of matchId
+            const originalOutcomeId: number = item.outcomeId;
+
+            // Find the index of originalOutcomeId in originalOutcomes
+            const index = originalOutcomes.indexOf(originalOutcomeId);
+            if (index !== -1) {
+                const lists = combinedOutcomes[index];
+
+                for (let i = 0; i < lists.length; i++) {
+                    const outcomeId = lists[i];
+                    reversedArray.value.push({ matchId, outcomeId });
+                }
+            }
+        }
+        const originalOutcomeId : number = item.outcomeId;
 
         // Find the index of originalOutcomeId in originalOutcomes
         const index = originalOutcomes.indexOf(originalOutcomeId);
