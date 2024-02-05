@@ -133,12 +133,15 @@ builder.ConfigureServices((hostContext, services) =>
 {
     services.AddMassTransit(busConfigurator =>
     {
+        //  manually configured receive endpoint or use default under UsingRabbitMq > cfg.ConfigureEndpoints(context);
         busConfigurator.AddConsumer<MessageCreatedConsumer>()
         .Endpoint(e =>
         {
             e.Name = "consumer-created"; // Queue-name // not recomended!
             e.ConcurrentMessageLimit = 2;
             e.Temporary = false;
+            e.UseMessageRetry(r => r.Immediate(5)); // 
+            e.Mandatory = true;
         });
         busConfigurator.UsingRabbitMq((context, cfg) =>
         {
@@ -149,6 +152,8 @@ builder.ConfigureServices((hostContext, services) =>
                     hostConfigurator.Password(rabbitMQSettings.Password);
                 }
             );
+            // for whole bus
+            cfg.UseMessageRetry(r => r.Immediate(5));
             // recommended way
             cfg.ConfigureEndpoints(context);
         }
@@ -213,3 +218,4 @@ app.Run();
     "bindings": []
 }
 ``` 
+For more advanced code see : https://github.com/g2384/Sample-JobConsumers
