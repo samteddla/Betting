@@ -1,23 +1,14 @@
-# Use the official Node.js image as the base image
-FROM node:18-alpine
 
-# Set the working directory inside the container
+FROM node:latest as build-stage
 WORKDIR /app
-
-# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
-
-# Install dependencies
 RUN npm install
-
-# Copy the rest of the application code to the working directory
-COPY . .
-
-# Build the Vue.js application
+COPY ./ .
 RUN npm run build
 
-# Expose the port on which the app will run (default is 3000)
-EXPOSE 3000
+FROM nginx as production-stage
+RUN mkdir /app
+COPY --from=build-stage /app/dist /app
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Start the application
-CMD ["npm", "run", "serve"]
+CMD ["nginx", "-g", "daemon off;"]

@@ -114,7 +114,7 @@ import { useRoute } from 'vue-router'
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { MatchStore, AuthStore } from '@/store';
 import router from '@/router';
-import { BetOnGame } from '@/api/api2';
+import { BetOnGame, MatchRequest } from '@/api/api2';
 
 const show = ref(true);
 const costs = ref(0);
@@ -137,11 +137,11 @@ const outcomes = ref([
     }]);
 const isAuth = ref(false)
 const selectionId = ref(1);
-const selectedChoices = ref([]);
+const selectedChoices = ref<{ matchId: number; outcomeId: number }[]>([]); 
 const route = useRoute()
 const routeId = ref('0');
-const result = ref([]);
-const reversedArray = ref([]);
+const result = ref<{ matchId: number; outcomeId: number }[]>([]); 
+const reversedArray = ref<{ matchId: number; outcomeId: number }[]>([]); 
 const alertVisible = ref(false);
 const alertVisibleMessage = ref('');
 // fetch the user information when params change
@@ -179,7 +179,7 @@ watch([selectedChoices, selectionId], (val: any) => {
 
     if (canBuy.value) {
         costs.value = Math.pow(2, selectedMatchIds.length - length) * halfandFullTime.value;
-        testMe();
+        updateVariables();
     }
     isAuth.value = auth.user !== null;
     if (!isAuth.value) {
@@ -210,21 +210,18 @@ onUnmounted(() => {
 });
 
 const submitMatch = async () => {
-    const responses: BetOnGame = { // Declare the responses variable with the BetOnGame type
+    const responses = { // Declare the responses variable with the BetOnGame type
         "selectionId": store.match?.matchSelectionId,
         "matchTypeId": selectionId.value, /* 1 full time 2 half time  3 full time and half time*/
         "amount": costs.value,
-        "matches": selectedChoices.value.map((c: any) => {
-            return {
-                "matchId": c.matchId,
-                "outcomeId": c.outcomeId
-            }
-        })
+        "matches": selectedChoices.value.map((c: any) =>  MatchRequest.fromJS(c) )
     };
+
+    const responses2 = BetOnGame.fromJS(responses);
 
     console.log(responses);
 
-    var resp = await store.betNow(responses);
+    var resp = await store.betNow(responses2);
     if (resp) {
         if (resp.isSaved) {
             alertVisible.value = true;
@@ -243,7 +240,7 @@ const showCards = () => {
     router.push({ name: 'mycards' });
 }
 
-const testMe = () => {
+const updateVariables = () => {
 
     // Web match list to db!
     const inputArray = selectedChoices.value.map((c: any) => {
@@ -254,7 +251,7 @@ const testMe = () => {
     });
 
     const groupedMatches: { matchId: number; outcomeId: number }[] = [];
-    result.value = [];
+    var resultValue: { matchId: number; outcomeId: number }[] = [];
     inputArray.forEach((item) => {
         const matchId = item.matchId;
         const outcomeId = item.outcomeId;
@@ -267,23 +264,19 @@ const testMe = () => {
     });
 
     for (const matchId in groupedMatches) {
-        result.value.push(groupedMatches[matchId]);
+        resultValue.push(groupedMatches[matchId]);
     }
 
-    // db match list to web
-    const originalOutcomes = [1, 2, 4, 5, 3, 6, 7]
-    const combinedOutcomes = [[1], [2], [4], [1, 4], [1, 2], [2, 4], [1, 2, 4]];
-
-    reversedArray.value = [];
+    var reversedValue: { matchId: number; outcomeId: number }[] = [];
     for (const item of result.value) {
         const groupedMatches: { matchId: number; outcomeId: number }[] = [];
-        result.value = [];
+        resultValue = [];
         inputArray.forEach((item) => {
             const matchId = item.matchId;
             const outcomeId = item.outcomeId;
 
             if (!groupedMatches[matchId]) {
-                groupedMatches[matchId] = { matchId, outcomeId: outcomeId };
+                groupedMatches[matchId] = { matchId: matchId, outcomeId: outcomeId };
             } else {
                 groupedMatches[matchId].outcomeId += outcomeId;
             }
@@ -291,15 +284,15 @@ const testMe = () => {
 
         for (const matchsId in groupedMatches) {
             const groupedMatches: { matchId: number; outcomeId: number }[] = []; // Update the type declaration of groupedMatches to be an array
-            result.value.push(groupedMatches[matchsId]);
+            resultValue.push(groupedMatches[matchsId]);
         }
 
         // db match list to web
         const originalOutcomes = [1, 2, 4, 5, 3, 6, 7]
         const combinedOutcomes = [[1], [2], [4], [1, 4], [1, 2], [2, 4], [1, 2, 4]];
 
-        reversedArray.value = [];
-        for (const item of result.value) {
+        reversedValue = [];
+        for (const item of resultValue) {
             const matchId: number = item.matchId as number; // Fix: Assert the type of matchId
             const originalOutcomeId: number = item.outcomeId;
 
@@ -310,22 +303,27 @@ const testMe = () => {
 
                 for (let i = 0; i < lists.length; i++) {
                     const outcomeId = lists[i];
-                    reversedArray.value.push({ matchId, outcomeId });
+                    reversedValue.push({ matchId, outcomeId });
                 }
             }
         }
-        const originalOutcomeId : number = item.outcomeId;
+        for (const item of resultValue) {
+            const originalOutcomeId = item.outcomeId;
+            const matchId: number = item.matchId as number; 
+            // Find the index of originalOutcomeId in originalOutcomes
+            const index = originalOutcomes.indexOf(originalOutcomeId);
+            if (index !== -1) {
+                const lists = combinedOutcomes[index];
 
-        // Find the index of originalOutcomeId in originalOutcomes
-        const index = originalOutcomes.indexOf(originalOutcomeId);
-        if (index !== -1) {
-            const lists = combinedOutcomes[index];
-
-            for (let i = 0; i < lists.length; i++) {
-                const outcomeId = lists[i];
-                reversedArray.value.push({ matchId, outcomeId });
+                for (let i = 0; i < lists.length; i++) {
+                    const outcomeId = lists[i];
+                    reversedValue.push({ matchId, outcomeId });
+                }
             }
         }
+
+        result.value = resultValue;
+        reversedArray.value = reversedValue;
     }
 }
 

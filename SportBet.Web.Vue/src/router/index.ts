@@ -53,11 +53,6 @@ const routes = [
     component : () => import('@/views/Result.vue'),
   },
   {
-    path: '/:pathMatch(.*)*',
-    name: 'NotFound',
-    component: () => import('@/views/NotFound.vue'),
-  },
-  {
     path : '/logout',
     name : 'logout',
     component : () => import('@/views/Home.vue'),
@@ -98,7 +93,12 @@ const routes = [
     path : '/test',
     name : 'test',
     component : () => import('@/views/Test.vue'),
-  }
+  },
+  {
+    path: '/:pathMatch(.*)*',
+    name: 'NotFound',
+    component: () => import('@/views/NotFound.vue'),
+  },
 ]
 
 const router = createRouter({

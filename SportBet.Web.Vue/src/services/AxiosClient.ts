@@ -17,7 +17,7 @@ class AxiosClient {
             (config : InternalAxiosRequestConfig) => {
                 const token = this.getAccessToken();
                 config.headers.Authorization = `Bearer ${token}`;
-                console.log("Request:", config.url);
+                console.log("[ Request ] ", config.url);
                 return config;
             },
             (error) => {

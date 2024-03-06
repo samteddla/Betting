@@ -6,8 +6,14 @@ services:
       context: .
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "3000:80"
     volumes:
       - .:/app
-    environment:
-      - NODE_ENV=development
+    #environment:
+    #  - NODE_ENV=development
+    networks:
+      - grpc-nginx-network
+
+networks:
+   grpc-nginx-network:
+    name:  grpc-nginx-network

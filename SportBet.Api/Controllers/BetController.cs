@@ -208,10 +208,12 @@ public class BetController : ApiController
                 ResultDate = DateTime.Now
             },publishPipe => publishPipe.Mandatory  = true);
 
+            /*
             var endpoint = await _sendEndpointProvider.GetSendEndpoint(new Uri("queue:consumer-created"));
             await endpoint.Send<IMessageCreated>(new { MessageId = 10020  });
 
             await _publishEndpoint.Publish<IMessageCreated>(new { MessageId = 20010 });
+            */
         }
 
         return result.Match(

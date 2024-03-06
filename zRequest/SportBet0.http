@@ -73,6 +73,12 @@ Authorization: Bearer {{Token}}
 Content-Type: application/json
 
 {
-  "matchId": 2,
+  "matchId": 9,
   "outcomeId": 3
 }
+###
+# get-active-bets
+GET {{HostAddress}}/Bet/get-active-bets
+Accept: application/json
+Authorization : Bearer {{Token}}
+Content-Type: application/json

@@ -17,7 +17,7 @@
                                     <div>{{ store.match.description }}</div>
                                 </v-col>
                                 <v-col>
-                                    <div>{{ store.match.activeUntil }}</div>
+                                    <div>{{ moment(store.match.activeUntil).format('DD.MM.YYYY')  }}</div>
                                 </v-col>
                             </v-row>
                         </v-card-text>
@@ -27,9 +27,9 @@
 
             <v-tabs v-model="matchtypeId" show-arrows slider-color="yellow" slider-size="2" centered grow
                 bg-color="gray-lighten-2" class="v-btn--block">
-                <v-tab value="1" style="font-size: 10px;">Full time</v-tab>
-                <v-tab value="2" style="font-size: 10px;">Half time</v-tab>
-                <v-tab value="3" style="font-size: 10px;">Both</v-tab>
+                <v-tab value="0" style="font-size: 10px;">Full time</v-tab>
+                <v-tab value="1" style="font-size: 10px;">Half time</v-tab>
+                <v-tab value="2" style="font-size: 10px;">Both</v-tab>
             </v-tabs>
         </v-container>
 
@@ -96,7 +96,7 @@
 </template>
 
 <script lang="ts" setup>
-
+import moment from 'moment';
 import { useRoute } from 'vue-router'
 import { ref, watch, onMounted, onUnmounted } from 'vue'
 import { MatchStore } from '@/store';
@@ -114,7 +114,7 @@ const outcomes = ref([
         "outcomeId": 4,
         "name": "D"
     }]);
-const matchtypeId = ref(1);
+const matchtypeId = ref(0);
 const selectedChoices = ref([]);
 const route = useRoute()
 const routeId = ref('0');
@@ -133,6 +133,7 @@ watch(() => route.params.id,
 // watch matchtypeId
 watch(() => matchtypeId.value,
     async matchtypesId => {
+        matchtypesId = matchtypesId + 1;
         getMatchResult(matchtypesId, route.params.id.toString());
     }
 )

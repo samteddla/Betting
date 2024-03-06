@@ -6,8 +6,14 @@ import { useAlertStore } from "@/store";
 import { ref } from "vue";
 import { jwtDecode } from "jwt-decode";
 
-import { type AuthenticationResult, type LoginRequest, type ChangePasswordRequest, type ChangePasswordResponse } from '@/api/api2'
-import { Client } from '@/api/api2'
+import {
+  Client,
+  type AuthenticationResult,
+  type ILoginRequest,
+  type ChangePasswordRequest,
+  type ChangePasswordResponse,
+  LoginRequest
+} from '@/api/api2'
 
 export const AuthStore = defineStore("auth", () => {
 
@@ -20,17 +26,11 @@ export const AuthStore = defineStore("auth", () => {
   const passwordResponse = ref<ChangePasswordResponse>();
 
   const login = async (username: string, password: string) => {
-    const loginRequest : LoginRequest = {
+    const loginRequest: ILoginRequest = {
       username: username,
-      password: password,
-      init: function (_data?: any): void {
-        throw new Error("Function not implemented.");
-      },
-      toJSON: function (data?: any) {
-        throw new Error("Function not implemented.");
-      }
+      password: password
     };
-    const response = await api.login(loginRequest).then((res) => {
+    const response = await api.login(new LoginRequest(loginRequest)).then((res) => {
       return res;
     });
     if (response !== null) {
@@ -73,6 +73,14 @@ export const AuthStore = defineStore("auth", () => {
     return false;
   }
 
-  return { passwordResponse, user, returnUrl, login, logout, changePassword, checkToken };
+  return {
+    passwordResponse,
+    user,
+    returnUrl,
+    login,
+    logout,
+    changePassword,
+    checkToken
+  };
 });
 
