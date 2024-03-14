@@ -14,7 +14,8 @@ COPY ["SportBet.Application/SportBet.Application.csproj", "SportBet.Application/
 COPY ["SportBet.Domain/SportBet.Domain.csproj", "SportBet.Domain/"]
 COPY ["SportBet.Contracts/SportBet.Contracts.csproj", "SportBet.Contracts/"]
 COPY ["SportBet.Infrastructure/SportBet.Infrastructure.csproj", "SportBet.Infrastructure/"]
-RUN dotnet restore "./SportBet.Api/./SportBet.Api.csproj"
+
+RUN dotnet restore "./SportBet.Api/SportBet.Api.csproj"
 COPY . .
 WORKDIR "/src/SportBet.Api"
 RUN dotnet build "./SportBet.Api.csproj" -c $BUILD_CONFIGURATION -o /app/build

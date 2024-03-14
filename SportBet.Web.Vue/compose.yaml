@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   vue-app:
+    container_name: vue-app
     build:
       context: .
       dockerfile: Dockerfile
@@ -9,8 +10,6 @@ services:
       - "3000:80"
     volumes:
       - .:/app
-    #environment:
-    #  - NODE_ENV=development
     networks:
       - grpc-nginx-network
 

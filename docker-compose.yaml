@@ -1,0 +1,70 @@
+version: '3.8'
+
+services:
+
+  # MS SQL Database Service
+  db:
+    container_name: mssql_db
+    environment:
+      SA_PASSWORD: "samson$010606"
+      ACCEPT_EULA: "Y"
+      MSSQL_PID: "Express"
+      TZ : "Europe/Berlin"
+    ports:
+      - "1433:1433"
+    volumes:
+      - sqlvolume:/data/db
+    networks:
+      - sportbet-network
+
+  # API Service
+  api:
+    container_name: api
+    ports:
+      - "8082:80"
+      #- "5001:443"
+    depends_on:
+      - db
+      - rabbitmq
+    #environment:
+    #  ConnectionStrings__DefaultConnection: "Server=mssql_db,1433;Database=BetBackup;User=sa;Password=samson$010606"
+    #  - ASPNETCORE_URLS=https://+:443;http://+:80
+    networks:
+      - sportbet-network
+
+  # Vue.js Web App Service
+  webapp:
+    image : docker.io/sportbet/sportbet-app-1.0
+    container_name: webapp
+    ports:
+      - "8080:80"
+    depends_on:
+      - db
+      - api
+      - rabbitmq
+    networks:
+      - sportbet-network
+
+  rabbitmq:
+    container_name: rabbit-mq
+    environment:
+      RABBITMQ_DEFAULT_USER: "admin"
+      RABBITMQ_DEFAULT_PASS: "admin123456"
+    volumes:
+      - ./rabbitmq.conf:/etc/rabbitmq/rabbitmq.conf
+    ports:
+      - "5672:5672"  # RabbitMQ default port
+      - "15672:15672"  # RabbitMQ Management Plugin port
+    networks:
+      - sportbet-network
+    restart: always
+
+volumes:
+  sqlvolume:
+
+networks:
+  sportbet-network:
+    name: sportbet-network
+    driver: bridge
+
+# docker-compose -f .\docker-compose.yaml -f .\docker-compose-override.yaml up       

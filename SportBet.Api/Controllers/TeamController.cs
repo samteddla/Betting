@@ -30,14 +30,17 @@ public class TeamController : ApiController
            Problem);
     }
 
-    /*
-    [HttpGet(Name = "Startup")]
+    
+    [HttpGet(Name = "Startup/{commandId}")]
     [AllowAnonymous]
-    public async Task<ActionResult<SaveResponse>> Startup()
+    public async Task<ActionResult<SaveResponse>> Startup(int commandId = 0)
     {
-        var response = await Sender.Send(new StartupCommand());
+        var response = await Sender.Send(new StartupCommand{
+            CommandId = commandId
+        });
+
         return response.Match(
            base.Ok,
            Problem);
-    }*/
+    }
 }

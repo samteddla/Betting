@@ -1,6 +1,8 @@
 ﻿using SportBet.Infrastructure;
 using Cocona;
 
+using SportBet.Xstart;
+
 var builder = CoconaApp.CreateBuilder();
 // dotnet run -- -h
 
@@ -41,7 +43,6 @@ app.AddSubCommand("database", x =>
     x.AddCommand("sample", () => utils.CreateFirstTimeData(dbContext));
 }).WithDescription("database commands");;
 
-/*
 app.AddCommand("add", () =>
 {
     Console.WriteLine("Create the database if it does not exist");
@@ -56,7 +57,7 @@ app.AddCommand("create", () =>
 {
     Console.WriteLine("initialize the database with test data");
     utils.CreateFirstTimeData(dbContext);
-});*/
+});
 
 
 app.Run();

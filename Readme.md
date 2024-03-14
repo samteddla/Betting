@@ -200,3 +200,16 @@ CREATE TABLE Reward (
 git remote add origin git@github.samteddla:samteddla/Betting.git
 git branch -M main
 git push -u origin main
+
+## run docker
+ 
+```bash
+cd .\src\Betting.Web.Vue\
+docker build -t sportbet/vue-app .  
+cd ..\
+docker-compose -f .\docker-compose.yaml -f .\docker-compose-override.yaml up   
+```
+in vue-webapp
+-- curl http://api/bet/get-match-selections
+on local pc
+http://localhost:8082/bet/get-match-selections

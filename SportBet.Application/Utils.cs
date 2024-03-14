@@ -1,7 +1,8 @@
-using SportBet.Infrastructure;
 using SportBet.Domain.Model;
+using SportBet.Infrastructure;
 
-namespace SportBet.Xstart;
+namespace SportBet.Application;
+
 public class Utils
 {
     public  void CreateFirstTimeData(BetContext context)
