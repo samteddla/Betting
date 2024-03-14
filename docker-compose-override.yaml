@@ -3,13 +3,13 @@ version: '3.8'
 services:
   # !! cd .\SportBet.Web.Vue\         
   # !! docker build -t sportbet/sportbet-app-1.0 .  
-  
+
   #webapp:
   #  image: ${DOCKER_REGISTRY-}webapp
   #  build:
-  #    context: .
-  #    dockerfile: Sportbet.Web.Vue/Dockerfile
-
+  #    context: ./Sportbet.Web.Vue
+  #    dockerfile: Dockerfile
+  
   db:
     image: "mcr.microsoft.com/mssql/server:2022-latest"
 
@@ -18,7 +18,7 @@ services:
     build:
       context: .
       dockerfile: Sportbet.Api/Dockerfile
-  
+
   rabbitmq:
     image: "rabbitmq:management-alpine"
   

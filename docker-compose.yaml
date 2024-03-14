@@ -34,7 +34,7 @@ services:
 
   # Vue.js Web App Service
   webapp:
-    image : docker.io/sportbet/sportbet-app-1.0
+    image : docker.io/sportbet/vue-app-1.0:latest
     container_name: webapp
     ports:
       - "8080:80"
@@ -44,7 +44,9 @@ services:
       - rabbitmq
     networks:
       - sportbet-network
-
+    volumes:
+      - ./logs:/var/log/nginx
+ #     - ./SportBet.Web.Vue:/app  # Mount parent directory as volume
   rabbitmq:
     container_name: rabbit-mq
     environment:

@@ -204,9 +204,9 @@ git push -u origin main
 ## run docker
  
 ```bash
-cd .\src\Betting.Web.Vue\
+cd Betting.Web.Vue
 docker build -t sportbet/vue-app .  
-cd ..\
+cd ..
 docker-compose -f .\docker-compose.yaml -f .\docker-compose-override.yaml up   
 ```
 in vue-webapp
