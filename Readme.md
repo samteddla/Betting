@@ -214,4 +214,4 @@ in vue-webapp
 on local pc
 http://localhost:8082/bet/get-match-selections
 
-0C%6:Kmd{]UaX8&
+7IO]gs$~|vvIfwH
