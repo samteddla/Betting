@@ -213,3 +213,5 @@ in vue-webapp
 -- curl http://api/bet/get-match-selections
 on local pc
 http://localhost:8082/bet/get-match-selections
+
+0C%6:Kmd{]UaX8&
